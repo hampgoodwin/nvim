@@ -306,7 +306,9 @@ require('telescope').setup {
       },
     },
     file_ignore_patterns = {
-      "node_modules"
+      "node_modules",
+      "ios/Pods",
+      "vendor",
     },
   },
 }
@@ -571,7 +573,7 @@ local catppuccin = require 'catppuccin'
 catppuccin.setup {
   flavour = 'macchiato',
   background = {
-    light = "machiatto",
+    light = "macchiato",
     dark = "mocha",
   },
 }

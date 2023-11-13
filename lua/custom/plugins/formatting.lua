@@ -8,6 +8,10 @@ return {
 		conform.setup({
 			formatters_by_ft = {
 				go = { "gofumpt" },
+				javascript = { "prettierd" },
+				javascriptreact = { "prettierd" },
+				typescript = { "prettierd" },
+				typescriptreact = { "prettierd" },
 			},
 			format_on_save = {
 				lsp_fallback = true,

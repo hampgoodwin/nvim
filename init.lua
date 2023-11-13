@@ -81,17 +81,29 @@ require('lazy').setup({
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
-      { 'williamboman/mason.nvim', config = true },
+      {
+        'williamboman/mason.nvim',
+        config = true,
+      },
       'williamboman/mason-lspconfig.nvim',
 
       'simrat39/rust-tools.nvim',
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
+    },
+  },
+
+  -- manage mason tools installations
+  -- configuration of plugin is belown
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    dependencies = {
+      { 'williamboman/mason.nvim' },
     },
   },
 
@@ -408,6 +420,18 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
+-- [[ Configure Mason Tools ]]
+local mason_tool_installer = require 'mason-tool-installer'
+mason_tool_installer.setup {
+  ensure_installed = {
+    'eslint_d',
+    'prettierd',
+    'delve',
+    'golangci-lint',
+    'gofumpt',
+  }
+}
+
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
@@ -493,6 +517,17 @@ local servers = {
       telemetry = { enable = false },
     },
   },
+
+  -- typescript-language-server
+  tsserver = {
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
+    }
+  },
+  eslint = {},
 }
 
 -- Setup neovim lua configuration

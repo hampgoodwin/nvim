@@ -229,6 +229,13 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
+  {
+    -- give context to cursor place in buffer via top-screen info
+    'nvim-treesitter/nvim-treesitter-context',
+  },
+  {
+    'windwp/nvim-ts-autotag',
+  },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
@@ -414,6 +421,25 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
+require('nvim-ts-autotag').setup()
+
+
+-- [[ Configure treesitter-context ]]
+-- this allows for scope-context info at the top of nvim
+-- when in a nested function
+require 'treesitter-context'.setup {
+  enable = true,
+  max_line = 10,
+  min_window_height = 0,
+  line_numbers = true,
+  multiline_threshold = 20,
+  trim_scope = 'outer',
+  mode = 'cursor',
+  separator = '-',
+  zindex = 20,
+  on_attach = nil,
+}
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
@@ -499,17 +525,13 @@ rusttools.setup {
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  -- clangd = {},
   gopls = {
     gopls = {
       completeUnimported = true,
       usePlaceholders = true,
     }
   },
-  -- pyright = {},
   rust_analyzer = {},
-  -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
     Lua = {
@@ -519,15 +541,8 @@ local servers = {
   },
 
   -- typescript-language-server
-  tsserver = {
-    filetypes = {
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact"
-    }
-  },
-  eslint = {},
+  tsserver = {},
+  -- eslint = {}, -- do not use eslint lsp; it's slow; just use eslint_d as a linter
 }
 
 -- Setup neovim lua configuration

@@ -46,6 +46,7 @@ return {
 
         -- Tsserver usually works poorly. Sorry you work with bad languages
         -- You can remove this line if you know what you're doing :)
+        -- I use prettier_d in custom plugins to handle ts/js/react formatting
         if client.name == 'tsserver' then
           return
         end

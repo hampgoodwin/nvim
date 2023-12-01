@@ -19,7 +19,7 @@ return {
 
 	---@type Ollama.Config
 	opts = {
-		model = "zephyr:7b",
+		model = "zephyr",
 		url = "http://127.0.0.1:11434",
 		serve = {
 			on_start = false,

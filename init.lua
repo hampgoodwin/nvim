@@ -373,7 +373,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'gomod', 'gosum', 'gowork', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim',
+  ensure_installed = { 'c', 'cpp', 'go', 'gomod', 'gosum', 'gowork', 'graphql', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim',
     'toml', 'json', 'html', 'sql', 'terraform', },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -558,6 +558,7 @@ local servers = {
   -- typescript-language-server
   tsserver = {},
   -- eslint = {}, -- do not use eslint lsp; it's slow; just use eslint_d as a linter
+  graphql = {},
 }
 
 -- Setup neovim lua configuration

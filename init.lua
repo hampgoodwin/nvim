@@ -106,7 +106,6 @@ require('lazy').setup({
       { 'williamboman/mason.nvim' },
     },
   },
-
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',

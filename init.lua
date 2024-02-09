@@ -469,6 +469,7 @@ mason_tool_installer.setup {
     'delve',
     'golangci-lint',
     'gofumpt',
+    'shellcheck',
   }
 }
 
@@ -558,6 +559,9 @@ local servers = {
   tsserver = {},
   -- eslint = {}, -- do not use eslint lsp; it's slow; just use eslint_d as a linter
   graphql = {},
+  bashls = {
+    filetypes = { 'sh' },
+  },
 }
 
 -- Setup neovim lua configuration

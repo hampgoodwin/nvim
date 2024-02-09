@@ -564,7 +564,6 @@ local servers = {
   bashls = {
     filetypes = { 'sh' },
   },
-  yamlls = {},
   helm_ls = {
     helm_ls = {
       yamlls = {

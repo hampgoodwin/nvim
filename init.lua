@@ -472,7 +472,7 @@ mason_tool_installer.setup {
     'golangci-lint',
     'gofumpt',
     'shellcheck',
-  }
+  },
 }
 
 -- [[ Configure LSP ]]
@@ -563,13 +563,6 @@ local servers = {
   graphql = {},
   bashls = {
     filetypes = { 'sh' },
-  },
-  helm_ls = {
-    helm_ls = {
-      yamlls = {
-        path = "yaml-language-server",
-      },
-    },
   },
 }
 

@@ -1,41 +1,60 @@
 return {
-	"nomnivore/ollama.nvim",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-	},
-
-	-- All the user commands added by the plugin
-	cmd = { "Ollama", "OllamaModel", "OllamaServe", "OllamaServeStop" },
-
-	-- Sample keybind for prompting. Note that the <c-u> is important for selections to work properly.
+	"David-Kunz/gen.nvim",
+	lazy = false,
 	keys = {
 		{
-			"<leader>oo",
-			":<c-u>lua require('ollama').prompt()<cr>",
-			desc = "ollama prompt",
-			mode = { "n", "v" },
+			"<leader>o",
+			":Gen<CR>",
+			desc = "gen.nvim",
+			mode = { "n", "v" }
 		},
 	},
-
-	---@type Ollama.Config
 	opts = {
-		model = "zephyr",
-		url = "http://192.168.0.162:11434",
-		serve = {
-			on_start = false,
-			command = "ollama",
-			args = { "serve" },
-			stop_command = "pkill",
-			stop_args = { "-SIGTERM", "ollama" },
-		},
-		-- View the actual default prompts in ./lua/ollama/prompts.lua
+		model = "deepseek-coder:6.7b", -- The default model to use.
+		host = "localhost", -- The host running the Ollama service.
+		port = "11434",  -- The port on which the Ollama service is listening.
+		display_mode = "split", -- The display mode. Can be "float" or "split".
+		show_prompt = true, -- Shows the Prompt submitted to Ollama.
+		show_model = true, -- Displays which model you are using at the beginning of your chat session.
+		no_auto_close = true, -- Never closes the window automatically.
+		init = function(options) pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end,
+		-- Function to initialize Ollama
+		command = function(options)
+			return "curl --silent --no-buffer -X POST http://" ..
+			    options.host .. ":" .. options.port .. "/api/chat -d $body"
+		end,
+		-- The command for the Ollama service. You can use placeholders $prompt, $model and $body (shellescaped).
+		-- This can also be a command string.
+		-- The executed command must return a JSON object with { response, context }
+		-- (context property is optional).
+		-- list_models = '<omitted lua function>', -- Retrieves a list of model names
+		debug = false, -- Prints errors and the command which is run.
 		prompts = {
-			Sample_Prompt = {
-				prompt = "This is a sample prompt that receives $input and $sel(ection), among others.",
-				input_label = "> ",
-				model = "mistral",
-				action = "display",
+			Generate = { prompt = "$input", replace = true },
+			Chat = { prompt = "$input" },
+			Summarize = { prompt = "Summarize the following:\n\n$text" },
+			["Ask about"] = { prompt = "Regarding this:\n\n```\n$text```\n\n$input" },
+			Review_Code = {
+				prompt =
+				"Review the following code and make concise suggestions:\n```$filetype\n$text\n```",
+			},
+			["Ask about code"] = {
+				prompt =
+				"Given this snippet of code:\n\n```$filetype\n$text\n```\n\n$input",
+				replace = false,
 			}
-		}
-	}
+		},
+	},
+	-- config = function()
+	-- 	local gen = require('gen')
+	-- 	gen.prompts = {}
+	-- 	gen.prompts["test"] = {
+	-- 		prompt = "what is a react component?",
+	-- 		replace = false
+	-- 	}
+	-- 	gen.prompts["Given this snippet of code:\\n\\n$text\\n\\nwhich is of filetype $filetype\\n\\n$input"] = {
+	-- 		prompt = "Given this snippet of code:\n\n$text\n\nwhich is of filetype $filetype\n\n$input",
+	-- 		replace = false,
+	-- 	}
+	-- end
 }

@@ -465,7 +465,7 @@ mason_tool_installer.setup {
   ensure_installed = {
     'eslint_d',
     'prettierd',
-    'delve',
+    -- 'delve',
     'golangci-lint',
     'gofumpt',
     'shellcheck',

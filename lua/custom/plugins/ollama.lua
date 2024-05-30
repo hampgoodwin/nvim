@@ -10,9 +10,9 @@ return {
 		},
 	},
 	opts = {
-		model = "deepseek-coder:6.7b", -- The default model to use.
+		model = "codestral", -- The default model to use.
 		host = "localhost", -- The host running the Ollama service.
-		port = "11434",  -- The port on which the Ollama service is listening.
+		port = "11434", -- The port on which the Ollama service is listening.
 		display_mode = "split", -- The display mode. Can be "float" or "split".
 		show_prompt = true, -- Shows the Prompt submitted to Ollama.
 		show_model = true, -- Displays which model you are using at the beginning of your chat session.

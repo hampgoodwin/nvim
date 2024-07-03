@@ -8,6 +8,8 @@ return {
   },
   opts = function()
     local tree = require('neo-tree')
-    tree.setup()
+    tree.setup({
+      sort_case_insensitive = true,
+    })
   end,
 }

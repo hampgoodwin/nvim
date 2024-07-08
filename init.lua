@@ -379,6 +379,7 @@ require('nvim-treesitter.configs').setup {
 
   highlight = { enable = true },
   indent = { enable = true },
+  fold = { enable = true },
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -433,6 +434,20 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+-- disable fold by default on file open
+vim.opt.foldenable = false
+-- enable folding by using treesitter
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  callback = function()
+    if require("nvim-treesitter.parsers").has_parser() then
+      vim.opt.foldmethod = "expr"
+      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+    else
+      vim.opt.foldmethod = "syntax"
+    end
+  end,
+})
 
 require('nvim-ts-autotag').setup()
 

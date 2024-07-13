@@ -314,6 +314,7 @@ require('lazy').setup({
             },
           },
         },
+        nil_ls = {},
         tsserver = {},
         bashls = { filetypes = { 'sh' } },
       }

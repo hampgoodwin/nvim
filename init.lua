@@ -297,9 +297,22 @@ require('lazy').setup({
           settings = {
             gopls = {
               gofumpt = true,
+              analyses = {
+                unusedvariable = true,
+                shadow = true,
+                useany = true,
+              },
+              hints = {
+                assignVariableTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
               completeUnimported = true,
               usePlaceholders = true,
               buildFlags = { "-tags=integration" },
+              vulncheck = "Imports",
             },
           },
         },

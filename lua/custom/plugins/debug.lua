@@ -87,10 +87,8 @@ return {
     -- Install golang specific config
     require('dap-go').setup {
       delve = {
+        initialize_timeout_sec = 20,
         build_flags = { "-tags=integration" },
-        -- On Windows delve must be run attached or it crashes.
-        -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-        detached = vim.fn.has 'win32' == 0,
       },
       tests = {
         verbose = true,

@@ -332,7 +332,7 @@ require('lazy').setup({
           },
         },
         nil_ls = {},
-        tsserver = {},
+        ts_ls = {},
         bashls = { filetypes = { 'sh' } },
       }
 

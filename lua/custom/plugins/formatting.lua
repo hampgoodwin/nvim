@@ -23,11 +23,11 @@ return {
 	keys = {
 		{
 			'<leader>f',
-        		function()
+			function()
 				require('conform').format { async = true, lsp_fallback = true }
-        		end,
-        		mode = '',
-        		desc = '[F]ormat buffer',
+			end,
+			mode = '',
+			desc = '[F]ormat buffer',
 		},
 	},
 	opts = {

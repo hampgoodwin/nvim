@@ -88,13 +88,13 @@ return {
     -- Install golang specific config
     require('dap-go').setup {
       dap_configurations = {
-        {
-          type = "go",
-          name = "Debug Test with args as Environment Variables",
-          program = require('dap-go').get_arguments() .. " ${file}",
-          mode = "remote",
-          request = "attach",
-        },
+        -- {
+        --   type = "go",
+        --   name = "Debug Test with args as Environment Variables",
+        --   program = require('dap-go').get_arguments() .. " ${file}",
+        --   mode = "remote",
+        --   request = "attach",
+        -- },
       },
       delve = {
         initialize_timeout_sec = 20,

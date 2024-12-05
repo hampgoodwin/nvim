@@ -33,9 +33,10 @@ return {
 	opts = {
 		notify_on_error = false,
 		formatters_by_ft = {
-			go = { "gofumpt" },
+			-- go = { "gofumpt" },
 			javascript = { "prettierd" },
 			javascriptreact = { "prettierd" },
+			json = { "prettierd" },
 			typescript = { "prettierd" },
 			typescriptreact = { "prettierd" },
 			nix = { "nixfmt" },

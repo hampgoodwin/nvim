@@ -1,5 +1,5 @@
 return
-{   -- LSP Configuration & Plugins
+{ -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
   dependencies = {
     -- Useful status updates for LSP.
@@ -185,7 +185,10 @@ return
         },
       },
       nil_ls = {},
-      ts_ls = {},
+      ts_ls = {
+        init_options = { hostInfo = "neovim" },
+        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+      },
       bashls = { filetypes = { 'sh' } },
     }
 

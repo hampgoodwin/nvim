@@ -185,6 +185,7 @@ return
         },
       },
       nil_ls = {},
+      jsonls = {},
       ts_ls = {
         init_options = { hostInfo = "neovim" },
         filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },

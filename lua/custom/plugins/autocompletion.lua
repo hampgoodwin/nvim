@@ -1,32 +1,27 @@
 return { -- optional blink completion source for require statements and module annotations
-  "saghen/blink.cmp",
-  -- version = 'v0.*',
+  'saghen/blink.cmp',
+  version = '*',
   lazy = false,
-  dependencies = 'rafamadriz/friendly-snippets',
-  dir = '~/github.com/Saghen/blink.cmp',
-  url = 'https://github.com/Saghen/blink.cmp',
-  dev = true,
+  -- dependencies = 'rafamadriz/friendly-snippets',
+  -- dir = '~/github.com/Saghen/blink.cmp',
+  -- url = 'https://github.com/Saghen/blink.cmp',
+  -- dev = true,
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
-    nerd_font_vraiant = 'mono',
     keymap = { preset = 'default' },
-    accept = { auto_brackets = { enabled = true } },
-    trigger = { signature_help = { enabled = true } },
-    -- configure the fuzzy finder for blink
-    -- fuzzy = {
-    --   prebuilt_binaries = { download = true, force_version = 'v0.5.1' },
-    -- },
+    appearance = {
+      -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+      -- Useful for when your theme doesn't support blink.cmp
+      -- Will be removed in a future release
+      use_nvim_cmp_as_default = false,
+      -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+      -- Adjusts spacing to ensure icons are aligned
+      nerd_font_variant = 'mono',
+    },
     sources = {
       -- add lazydev to your completion providers
-      completion = {
-        enabled_providers = { "lsp", "path", "snippets", "buffer", "lazydev" },
-      },
-      providers = {
-        -- dont show LuaLS require statements when lazydev has items
-        lsp = { name = 'LSP', fallback_for = { "lazydev" } },
-        lazydev = { name = "LazyDev", module = "lazydev.integrations.blink" },
-      },
+      default = { 'lsp', 'path', 'snippets', 'luasnip', 'buffer' },
     },
   },
 }

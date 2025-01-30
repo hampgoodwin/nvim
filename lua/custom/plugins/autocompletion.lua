@@ -21,7 +21,7 @@ return { -- optional blink completion source for require statements and module a
     },
     sources = {
       -- add lazydev to your completion providers
-      default = { 'lsp', 'path', 'snippets', 'luasnip', 'buffer' },
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
     },
   },
 }

@@ -19,6 +19,7 @@ return { -- optional blink completion source for require statements and module a
       -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = 'mono',
     },
+    signature = { enabled = true },
     sources = {
       -- add lazydev to your completion providers
       default = { 'lsp', 'path', 'snippets', 'buffer' },

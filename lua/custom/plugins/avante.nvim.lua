@@ -5,6 +5,15 @@ return {
   version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
   opts = {
     -- add any opts here
+    -- for example
+    provider = 'ollama',
+    vendors = {
+      ollama = {
+        __inherited_from = 'openai',
+        endpoint = 'http://hamp:11434/v1',
+        model = 'deepseek-coder-v2:16b',
+      },
+    },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = 'make',
@@ -19,7 +28,7 @@ return {
     'hrsh7th/nvim-cmp', -- autocompletion for avante commands and mentions
     'ibhagwan/fzf-lua', -- for file_selector provider fzf
     'echasnovski/mini.icons', -- or nvim-tree/nvim-web-devicons
-    -- 'zbirenbaum/copilot.lua', -- for providers='copilot' -- I don't use copilot, BOOO!!
+    -- 'zbirenbaum/copilot.lua', -- for providers='copilot'
     {
       -- support for image pasting
       'HakonHarnes/img-clip.nvim',

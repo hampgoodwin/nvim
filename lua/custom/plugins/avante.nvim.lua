@@ -2,7 +2,7 @@ return {
   'yetone/avante.nvim',
   event = 'VeryLazy',
   lazy = false,
-  version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+  version = '*', -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
   opts = {
     -- add any opts here
     -- for example
@@ -10,13 +10,14 @@ return {
     vendors = {
       ollama = {
         __inherited_from = 'openai',
+        api_key_name = '',
         endpoint = 'http://hamp:11434/v1',
         model = 'deepseek-coder-v2:16b',
       },
     },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  build = 'make',
+  -- build = 'make',
   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
   dependencies = {
     'stevearc/dressing.nvim',
@@ -25,10 +26,10 @@ return {
     --- The below dependencies are optional,
     'echasnovski/mini.pick', -- for file_selector provider mini.pick
     'nvim-telescope/telescope.nvim', -- for file_selector provider telescope
-    'hrsh7th/nvim-cmp', -- autocompletion for avante commands and mentions
+    -- 'hrsh7th/nvim-cmp', -- autocompletion for avante commands and mentions -- i use blink.cmp
     'ibhagwan/fzf-lua', -- for file_selector provider fzf
     'echasnovski/mini.icons', -- or nvim-tree/nvim-web-devicons
-    -- 'zbirenbaum/copilot.lua', -- for providers='copilot'
+    -- 'zbirenbaum/copilot.lua', -- for providers='copilot' -- i don't use copilot
     {
       -- support for image pasting
       'HakonHarnes/img-clip.nvim',

@@ -1,10 +1,9 @@
-return
-{ -- LSP Configuration & Plugins
+return { -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
   dependencies = {
     -- Useful status updates for LSP.
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-    { 'j-hui/fidget.nvim',  opts = {} },
+    { 'j-hui/fidget.nvim', opts = {} },
 
     -- lazydev configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
@@ -164,8 +163,8 @@ return
             },
             completeUnimported = true,
             usePlaceholders = true,
-            buildFlags = { "-tags=integration" },
-            vulncheck = "Imports",
+            buildFlags = { '-tags=integration' },
+            vulncheck = 'Imports',
           },
         },
       },
@@ -187,8 +186,8 @@ return
       nil_ls = {},
       jsonls = {},
       ts_ls = {
-        init_options = { hostInfo = "neovim" },
-        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+        init_options = { hostInfo = 'neovim' },
+        filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
       },
       bashls = { filetypes = { 'sh' } },
     }

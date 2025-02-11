@@ -22,12 +22,7 @@ return { -- optional blink completion source for require statements and module a
     signature = { enabled = true },
     sources = {
       -- add lazydev to your completion providers
-      default = { 'lsp', 'path', 'snippets', 'buffer', 'avante_commands', 'avante_mentions', 'avante_files' },
-      compat = {
-        'avante_commands',
-        'avante_mentions',
-        'avante_files',
-      },
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
     },
   },
   opts_extend = { 'sources.default' },

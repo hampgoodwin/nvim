@@ -2,7 +2,7 @@ return { -- optional blink completion source for require statements and module a
   'saghen/blink.cmp',
   version = '*',
   lazy = false,
-  -- dependencies = 'rafamadriz/friendly-snippets',
+  dependencies = 'rafamadriz/friendly-snippets',
   -- dir = '~/github.com/Saghen/blink.cmp',
   -- url = 'https://github.com/Saghen/blink.cmp',
   -- dev = true,
@@ -14,7 +14,7 @@ return { -- optional blink completion source for require statements and module a
       -- Sets the fallback highlight groups to nvim-cmp's highlight groups
       -- Useful for when your theme doesn't support blink.cmp
       -- Will be removed in a future release
-      use_nvim_cmp_as_default = false,
+      use_nvim_cmp_as_default = true,
       -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = 'mono',
@@ -22,7 +22,13 @@ return { -- optional blink completion source for require statements and module a
     signature = { enabled = true },
     sources = {
       -- add lazydev to your completion providers
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'lsp', 'path', 'snippets', 'buffer', 'avante_commands', 'avante_mentions', 'avante_files' },
+      compat = {
+        'avante_commands',
+        'avante_mentions',
+        'avante_files',
+      },
     },
   },
+  opts_extend = { 'sources.default' },
 }

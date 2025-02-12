@@ -3,6 +3,9 @@ return {
   event = 'VeryLazy',
   lazy = false,
   version = '*', -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+  -- dev = true,
+  -- dir = '~/github.com/yetone/avante.nvim',
+  -- url = 'https://github.com/yetone.nvim',
   opts = {
     -- add any opts here
     -- for example
@@ -12,12 +15,15 @@ return {
         __inherited_from = 'openai',
         api_key_name = '',
         endpoint = 'http://hamp:11434/v1',
-        model = 'deepseek-coder-v2:16b',
+        model = 'qwen2.5-coder:14b',
       },
+    },
+    file_selector = {
+      provider = 'fzf',
     },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  -- build = 'make',
+  build = 'make',
   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
   dependencies = {
     'stevearc/dressing.nvim',
@@ -60,36 +66,6 @@ return {
       opts = {
         spec = {
           { '<leader>a', group = 'avante' },
-        },
-      },
-    },
-    { 'saghen/blink.compat' },
-    {
-      'saghen/blink.cmp',
-      lazy = false,
-      opts = {
-        sources = {
-          default = { 'avante_commands', 'avante_mentions', 'avante_files' },
-          providers = {
-            avante_commands = {
-              name = 'avante_commands',
-              module = 'blink.compat.source',
-              score_offset = 90, -- show at a higher priority than lsp
-              opts = {},
-            },
-            avante_files = {
-              name = 'avante_files',
-              module = 'blink.compat.source',
-              score_offset = 100, -- show at a higher priority than lsp
-              opts = {},
-            },
-            avante_mentions = {
-              name = 'avante_mentions',
-              module = 'blink.compat.source',
-              score_offset = 1000, -- show at a higher priority than lsp
-              opts = {},
-            },
-          },
         },
       },
     },

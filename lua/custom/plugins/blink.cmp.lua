@@ -26,4 +26,26 @@ return { -- optional blink completion source for require statements and module a
     },
   },
   opts_extend = { 'sources.default' },
+  config = function()
+    require('blink-cmp').setup {
+      keymap = {
+        -- Manually invoke minuet completion.
+        ['<A-y>'] = require('minuet').make_blink_map(),
+      },
+      sources = {
+        -- Enable minuet for autocomplete
+        default = { 'lsp', 'path', 'buffer', 'snippets', 'minuet' },
+        -- For manual completion only, remove 'minuet' from default
+        providers = {
+          minuet = {
+            name = 'minuet',
+            module = 'minuet.blink',
+            score_offset = 8, -- Gives minuet higher priority among suggestions
+          },
+        },
+      },
+      -- Recommended to avoid unnecessary request
+      completion = { trigger = { prefetch_on_insert = false } },
+    }
+  end,
 }

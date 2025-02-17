@@ -137,13 +137,6 @@ return { -- LSP Configuration & Plugins
       end,
     })
 
-    -- LSP servers and clients are able to communicate to each other what features they support.
-    --  By default, Neovim doesn't support everything that is in the LSP specification.
-    --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-    --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities(capabilities))
-
     local lsp_servers = {
       gopls = {
         settings = {
@@ -172,7 +165,6 @@ return { -- LSP Configuration & Plugins
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
-        -- capabilities = {},
         settings = {
           Lua = {
             completion = {
@@ -193,7 +185,8 @@ return { -- LSP Configuration & Plugins
     }
 
     for server_name, server_config in pairs(lsp_servers) do
-      require('lspconfig')[server_name].setup(server_config, { capabilities = capabilities })
+      server_config.capabilities = require('blink.cmp').get_lsp_capabilities(server_config.capabilities)
+      require('lspconfig')[server_name].setup(server_config)
     end
   end,
 }

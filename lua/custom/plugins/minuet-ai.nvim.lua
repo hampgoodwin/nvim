@@ -2,7 +2,7 @@ return {
   'milanglacier/minuet-ai.nvim',
   opts = {
     provider = 'openai_fim_compatible',
-    notify = 'debug',
+    -- notify = 'debug',
     n_completions = 1,
     context_window = 512,
     provider_options = {
@@ -28,16 +28,16 @@ return {
         -- accept n lines (prompts for number)
         accept_n_lines = '<A-z>',
         -- Cycle to prev completion item, or manually invoke completion
-        prev = '<A-[>',
+        prev = '<A-c>',
         -- Cycle to next completion item, or manually invoke completion
-        next = '<A-]>',
+        next = '<A-x>',
         dismiss = '<A-e>',
       },
-      show_on_completion_menu = false,
+      show_on_completion_menu = true,
     },
   },
   dependencies = {
     { 'nvim-lua/plenary.nvim' },
-    -- { 'Saghen/blink.cmp' }, -- set up in separate plugin file
+    -- { 'saghen/blink.cmp' }, -- set up in separate plugin file
   },
 }

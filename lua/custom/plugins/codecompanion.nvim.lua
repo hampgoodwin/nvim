@@ -1,5 +1,6 @@
 return {
   'olimorris/codecompanion.nvim',
+  version = 'v12.2.0',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
@@ -65,7 +66,7 @@ return {
           intro_message = '✨CodeCompanion✨ ? for Opts',
           show_header_separator = false,
           show_settings = false,
-          start_in_insert_mode = true,
+          start_in_insert_mode = false,
         },
         diff = {
           enabled = true,

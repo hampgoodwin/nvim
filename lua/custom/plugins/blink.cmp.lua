@@ -1,9 +1,12 @@
 return {
   { -- optional blink completion source for require statements and module annotations
     'saghen/blink.cmp',
-    version = '*',
+    version = 'v0.11.0',
     lazy = false,
-    dependencies = 'rafamadriz/friendly-snippets',
+    dependencies = {
+      'rafamadriz/friendly-snippets',
+      'echasnovski/mini.icons',
+    },
     -- dir = '~/github.com/Saghen/blink.cmp',
     -- url = 'https://github.com/Saghen/blink.cmp',
     -- dev = true,
@@ -11,8 +14,12 @@ return {
       require('blink.cmp').setup {
         keymap = {
           preset = 'default',
-          -- Manually invoke minuet completion.
-          ['<A-y>'] = require('minuet').make_blink_map(),
+          -- Manually invoke snippets completion
+          ['<C-\\>'] = {
+            function(cmp)
+              cmp.show { providers = { 'snippets' } }
+            end,
+          },
         },
         appearance = {
           -- Sets the fallback highlight groups to nvim-cmp's highlight groups
@@ -25,33 +32,40 @@ return {
         },
         signature = { enabled = true },
         sources = {
-          -- Enable minuet for autocomplete
-          -- default = { 'lsp', 'path', 'buffer', 'minuet' },
-          default = { 'lsp', 'path', 'buffer', 'minuet' },
-          -- For manual completion only, remove 'minuet' from default
-          providers = {
-            minuet = {
-              name = 'minuet',
-              module = 'minuet.blink',
-              score_offset = 8,
-            },
-          },
+          default = { 'lsp', 'path', 'buffer' }, -- , snippets (req friendly-snippets),
         },
-        -- Recommended to avoid unnecessary request
         completion = {
+          documentation = {
+            auto_show = false, -- to display documentation automatically, set to true
+            auto_show_delay_ms = 500,
+          },
           menu = {
             draw = {
+              treesitter = { 'lsp' },
               align_to = 'kind_icon',
               columns = {
-                { 'kind_icon', gap = 1 },
-                { 'source_name', gap = 0 },
+                { 'kind_icon' },
+                { 'source_name', gap = 1 },
                 { 'label', 'label_description', gap = 1 },
+              },
+              components = {
+                kind_icon = {
+                  ellipsis = false,
+                  text = function(ctx)
+                    local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
+                    return kind_icon
+                  end,
+                  highlight = function(ctx)
+                    local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+                    return hl
+                  end,
+                },
               },
             },
           },
-          -- trigger = { prefetch_on_insert = false },
         },
       }
     end,
+    opts_extend = { 'sources.default' },
   },
 }

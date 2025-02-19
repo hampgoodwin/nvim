@@ -2,7 +2,7 @@ return {
   'milanglacier/minuet-ai.nvim',
   opts = {
     provider = 'openai_fim_compatible',
-    notify = 'debug',
+    -- notify = 'debug',
     n_completions = 1,
     context_window = 512,
     request_timeout = 10,

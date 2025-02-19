@@ -5,6 +5,7 @@ return {
     -- notify = 'debug',
     n_completions = 1,
     context_window = 512,
+    request_timeout = 10,
     provider_options = {
       openai_fim_compatible = {
         api_key = 'TERM',
@@ -28,9 +29,9 @@ return {
         -- accept n lines (prompts for number)
         accept_n_lines = '<A-z>',
         -- Cycle to prev completion item, or manually invoke completion
-        prev = '<A-c>',
+        prev = '<A-[>',
         -- Cycle to next completion item, or manually invoke completion
-        next = '<A-x>',
+        next = '<A-]>',
         dismiss = '<A-e>',
       },
       show_on_completion_menu = true,

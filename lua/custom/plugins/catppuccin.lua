@@ -1,5 +1,6 @@
 return {
   'catppuccin/nvim',
+  branch = 'main',
   name = 'catppuccin',
   priority = 1000,
   opts = {
@@ -10,11 +11,10 @@ return {
     },
     integrations = {
       blink_cmp = true,
-      cmp = true,
-      fzf = true,
-      gitsigns = true,
       dap = true,
       dap_ui = true,
+      fzf = true,
+      gitsigns = true,
       mini = { enabled = true, indentscope_color = 'macchiato' },
       native_lsp = {
         enabled = true,
@@ -37,8 +37,10 @@ return {
         },
       },
       neotest = true,
+      snacks = { enabled = true, indent_scope_color = 'macchiato' },
+      telescope = { enabled = false },
       treesitter = true,
-      whick_key = true,
+      which_key = true,
     },
   },
 }

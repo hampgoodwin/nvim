@@ -9,13 +9,13 @@ return {
       dark = 'macchiato',
     },
     integrations = {
-      cmp = true,
-      gitsigns = true,
-      treesitter = true,
       blink_cmp = true,
-      mini = { enabled = true },
+      cmp = true,
+      fzf = true,
+      gitsigns = true,
       dap = true,
       dap_ui = true,
+      mini = { enabled = true, indentscope_color = 'macchiato' },
       native_lsp = {
         enabled = true,
         virtual_text = {
@@ -36,8 +36,9 @@ return {
           background = true,
         },
       },
-      telescope = { enabled = true },
-      -- whick_key = true,
+      neotest = true,
+      treesitter = true,
+      whick_key = true,
     },
   },
 }

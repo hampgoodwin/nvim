@@ -28,23 +28,6 @@ return {
     local dap = require 'dap'
     local dapui = require 'dapui'
 
-    -- require('mason-nvim-dap').setup {
-    --   -- Makes a best effort to setup the various debuggers with
-    --   -- reasonable debug configurations
-    --   automatic_installation = true,
-    --
-    --   -- You can provide additional configuration to the handlers,
-    --   -- see mason-nvim-dap README for more information
-    --   handlers = {},
-    --
-    --   -- You'll need to check that you have the required things installed
-    --   -- online, please don't ask me how to install them :)
-    --   ensure_installed = {
-    --     -- Update this to ensure that you have the debuggers for the langs you want
-    --     'delve',
-    --   },
-    -- }
-
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
     vim.keymap.set('n', '<F6>', dap.terminate, { desc = 'Debug: Terminate' })
@@ -56,6 +39,8 @@ return {
     vim.keymap.set('n', '<leader>B', function()
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
     end, { desc = 'Debug: Set Breakpoint' })
+    -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
+    vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
@@ -79,8 +64,11 @@ return {
       },
     }
 
-    -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
+    -- sign definitions
+    local sign = vim.fn.sign_define
+    sign('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+    sign('DapBreakpointCondition', { text = '●', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' })
+    sign('DapLogPoint', { text = '◆', texthl = 'DapLogPoint', linehl = '', numhl = '' })
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
@@ -99,7 +87,7 @@ return {
       },
       delve = {
         initialize_timeout_sec = 20,
-        build_flags = { "-tags=integration" },
+        build_flags = { '-tags=integration' },
       },
       tests = {
         verbose = true,

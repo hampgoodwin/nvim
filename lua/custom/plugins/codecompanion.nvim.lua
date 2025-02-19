@@ -24,27 +24,6 @@ return {
             },
           })
         end,
-        deepseekr114b = function()
-          return require('codecompanion.adapters').extend('ollama', {
-            schema = {
-              model = { default = 'ishumilin/deepseek-r1-coder-tools:14b' },
-              num_ctx = { default = 16384 },
-            },
-            env = {
-              url = 'http://hamp:11434', -- optional: default value is ollama url http://127.0.0.1:11434
-            },
-          })
-        end,
-        openai = function()
-          return require('codecompanion.adapters').extend('openai', {
-            schema = {
-              model = { default = 'gpt-4o-mini' },
-            },
-            env = {
-              api_key = 'cmd:echo $OPENAI_API_KEY',
-            },
-          })
-        end,
       },
 
       strategies = {

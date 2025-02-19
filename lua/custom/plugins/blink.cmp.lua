@@ -32,6 +32,7 @@ return {
         },
         signature = { enabled = true },
         sources = {
+          per_filetype = { codecompanion = { 'codecompanion' } },
           default = { 'lsp', 'path', 'buffer' }, -- , snippets (req friendly-snippets),
         },
         completion = {

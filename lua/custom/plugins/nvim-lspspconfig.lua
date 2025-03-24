@@ -1,3 +1,17 @@
+-- nvim-lsp
+--
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
+  callback = function(event)
+    -- Rename the variable under your cursor.
+    --  Most Language Servers support renaming across files, etc.
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = event.buf, desc = '[LSP] [R]e[n]ame' })
+    -- Execute a code action, usually your cursor needs to be on top of an error
+    -- or a suggestion from your LSP for this to activate.
+    vim.keymap.set({ 'n', 'x' }, '<leader>ca', vim.lsp.buf.code_action, { buffer = event.buf, desc = '[LSP] [C]ode [A]ction' })
+  end,
+})
+
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
@@ -56,6 +70,7 @@ return {
         init_options = { hostInfo = 'neovim' },
         filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
       },
+      terraformls = {},
       bashls = { filetypes = { 'sh' } },
     }
 

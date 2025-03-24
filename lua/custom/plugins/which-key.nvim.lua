@@ -2,7 +2,8 @@ return { -- Useful plugin to show you pending keybinds.
   'folke/which-key.nvim',
   dependencies = { 'echasnovski/mini.icons' },
   event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-  keys = {
+  mappings = vim.g.have_nerd_font,
+  keys = vim.g.have_nerd_font and {
     {
       '<leader>?',
       function()

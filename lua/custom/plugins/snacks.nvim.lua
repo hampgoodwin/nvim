@@ -3,7 +3,7 @@ return {
     'folke/snacks.nvim',
     priority = 1000,
     lazy = false,
-    ---@type snacks.Config
+    ---@class snacks.Config
     opts = {
       dashboard = {
         sections = {
@@ -17,6 +17,33 @@ return {
       explorer = { enabled = false },
       picker = {
         enabled = true,
+        sources = {
+          ---@class snacks.picker.files
+          files = {
+            hidden = true,
+            ignored = true,
+            exclude = { 'node_modules/**', '.next/**' },
+          },
+          ---@class snacks.picker.grep
+          grep = {
+            hidden = true,
+            ignored = true,
+            exclude = { 'node_modules/**', '.next/**' },
+          },
+        },
+        win = {
+          input = {
+            keys = {
+              ['<a-a>'] = { 'toggle_hidden', mode = { 'i', 'n' } },
+            },
+          },
+        },
+        formatters = {
+          file = {
+            filename_first = true,
+            truncate = 150,
+          },
+        },
         layout = {
           reverse = true,
           layout = {
@@ -85,6 +112,13 @@ return {
           Snacks.picker.buffers()
         end,
         desc = 'Buffers',
+      },
+      {
+        '<leader>fd',
+        function()
+          Snacks.picker.files { filter = { cwd = true } }
+        end,
+        desc = 'Find Config File',
       },
       {
         '<leader>fc',

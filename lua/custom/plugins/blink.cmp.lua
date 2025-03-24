@@ -1,11 +1,12 @@
 return {
   { -- optional blink completion source for require statements and module annotations
     'saghen/blink.cmp',
-    version = 'v0.11.0',
+    version = '*',
     lazy = false,
     dependencies = {
       'rafamadriz/friendly-snippets',
       'echasnovski/mini.icons',
+      'moyiz/blink-emoji.nvim',
     },
     -- dir = '~/github.com/Saghen/blink.cmp',
     -- url = 'https://github.com/Saghen/blink.cmp',
@@ -33,8 +34,26 @@ return {
         signature = { enabled = true },
         sources = {
           per_filetype = { codecompanion = { 'codecompanion' } },
-          default = { 'lsp', 'path', 'buffer' }, -- , snippets (req friendly-snippets),
+          default = { 'lsp', 'path', 'buffer', 'emoji', 'snippets' }, -- , snippets (req friendly-snippets),
+
+          providers = {
+            emoji = {
+              module = 'blink-emoji',
+              name = 'Emoji',
+              score_offset = 15,
+              opts = { insert = true },
+              -- should_show_items = function()
+              --   return vim.tbl_contains(
+              --     -- Enable emoji completion only for git commits and markdown
+              --     -- By default, enabled fo rall file-types.
+              --     { 'gitcommit', 'markdown' },
+              --     vim.o.filetype
+              --   )
+              -- end,
+            },
+          },
         },
+        fuzzy = { implementation = 'prefer_rust_with_warning' },
         completion = {
           documentation = {
             auto_show = false, -- to display documentation automatically, set to true

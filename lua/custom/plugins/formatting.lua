@@ -41,6 +41,9 @@ return {
       typescriptreact = { 'prettierd' },
       nix = { 'nixfmt' },
       lua = { 'stylua' },
+      terraform = { 'terraform_fmt' },
+      tf = { 'terraform_fmt' },
+      ['terraform-vars'] = { 'terraform_fmt' },
     },
     format_on_save = function(bufnr)
       if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then

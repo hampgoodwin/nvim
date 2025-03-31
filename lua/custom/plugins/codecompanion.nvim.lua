@@ -12,6 +12,12 @@ return {
         language = 'English',
       },
 
+      -- set keymaps
+      vim.keymap.set('n', '<Leader>a\\', '<cmd>CodeCompanionChat toggle<CR>', { desc = '[a]i toggle chat' }),
+      vim.keymap.set('v', '<Leader>aE', function()
+        require('codecompanion').prompt 'Explain'
+      end, { desc = '[a]i [E]xplain selected...' }),
+
       adapters = {
         qwen25coder14b = function()
           return require('codecompanion.adapters').extend('ollama', {
@@ -43,18 +49,12 @@ return {
       strategies = {
         chat = {
           adapter = 'openrouter',
-          keymaps = {
-            -- open = { modes = { n = '<LocalLeader>oc' }, description = 'CodeCompanion: Start chat with default adapter' },
-            -- accept_change = { modes = { n = 'ga' }, description = 'CodeCompanion: Accept change' },
-            -- reject_change = { modes = { n = 'gr' }, description = 'CodeCompanion: Reject change' },
+          slash_commands = {
+            ['file'] = { opts = { provider = 'snacks' } },
           },
         },
         inline = {
           adapter = 'openrouter',
-          keymaps = {
-            -- accept_change = { modes = { n = 'ga' }, description = 'CodeCompanion: Accept change' },
-            -- reject_change = { modes = { n = 'gr' }, description = 'CodeCompanion: Reject change' },
-          },
         },
       },
 
@@ -69,6 +69,41 @@ return {
         diff = {
           enabled = true,
           provider = 'mini_diff', -- default|mini_diff
+        },
+      },
+
+      prompt_library = {
+        ['Explain'] = {
+          strategy = 'chat',
+          description = 'Explain the code in the file type',
+          opts = {
+            mapping = '<LocalLeader>aE',
+            modes = { 'v' },
+            short_name = 'Explain',
+            auto_submit = false,
+            stop_context_insertion = true,
+            user_promp = true,
+          },
+          prompts = {
+            {
+              role = 'system',
+              content = function(context)
+                return 'You are an experienced '
+                  .. context.filetype
+                  .. ' engineer. I will ask you specific question and I want you to return concise explanations, codeblock examples, and excerpts from source documentation.'
+              end,
+            },
+            {
+              role = 'user',
+              content = function(context)
+                local visual = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
+                return 'I have the following code:\n\n```' .. context.filetype .. '\n' .. visual .. '\n```\n\nPlease explain '
+              end,
+              opts = {
+                contains_code = true,
+              },
+            },
+          },
         },
       },
     }

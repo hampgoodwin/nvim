@@ -75,7 +75,7 @@ return {
     }
 
     for server_name, server_config in pairs(lsp_servers) do
-      server_config.capabilities = require('blink.cmp').get_lsp_capabilities(server_config.capabilities)
+      -- server_config.capabilities = require('blink.cmp').get_lsp_capabilities(server_config.capabilities)
       require('lspconfig')[server_name].setup(server_config)
     end
   end,

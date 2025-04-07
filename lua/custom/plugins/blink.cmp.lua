@@ -33,7 +33,6 @@ return {
         },
         signature = { enabled = true },
         sources = {
-          per_filetype = { codecompanion = { 'codecompanion' } },
           default = { 'lsp', 'path', 'buffer', 'emoji', 'snippets' }, -- , snippets (req friendly-snippets),
 
           providers = {

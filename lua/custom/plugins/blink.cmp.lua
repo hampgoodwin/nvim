@@ -1,4 +1,5 @@
 return {
+  -- { 'saghen/blink.compat' },
   { -- optional blink completion source for require statements and module annotations
     'saghen/blink.cmp',
     version = '*',
@@ -33,7 +34,7 @@ return {
         },
         signature = { enabled = true },
         sources = {
-          default = { 'lsp', 'path', 'buffer', 'emoji', 'snippets' }, -- , snippets (req friendly-snippets),
+          default = { 'lsp', 'path', 'buffer', 'emoji', 'snippets' }, -- , snippets (req friendly-snippets),'avante_commands', 'avante_mentions', 'avante_files'
 
           providers = {
             emoji = {
@@ -50,6 +51,24 @@ return {
               --   )
               -- end,
             },
+            --   avante_commands = {
+            --     name = 'avante_commands',
+            --     module = 'blink.compat.source',
+            --     score_offset = 90, -- show at a higher priority than lsp
+            --     opts = {},
+            --   },
+            --   avante_files = {
+            --     name = 'avante_files',
+            --     module = 'blink.compat.source',
+            --     score_offset = 100, -- show at a higher priority than lsp
+            --     opts = {},
+            --   },
+            --   avante_mentions = {
+            --     name = 'avante_mentions',
+            --     module = 'blink.compat.source',
+            --     score_offset = 1000, -- show at a higher priority than lsp
+            --     opts = {},
+            --   },
           },
         },
         fuzzy = { implementation = 'prefer_rust_with_warning' },

@@ -7,6 +7,9 @@ return {
     columns = {
       'icon',
     },
+    keymaps = {
+      ['<C-n>'] = 'actions.refresh',
+    },
     lsp_file_methods = {
       autosave_changes = true,
     },

@@ -13,23 +13,12 @@ return {
       },
 
       -- set keymaps
-      vim.keymap.set('n', '<Leader>a\\', '<cmd>CodeCompanionChat toggle<CR>', { desc = '[a]i toggle chat' }),
+      vim.keymap.set('n', '<Leader>a\\', '<cmd>CodeCompanionChat toggle<CR>', { noremap = true, silent = true, desc = '[a]i toggle chat' }),
       vim.keymap.set('v', '<Leader>aE', function()
         require('codecompanion').prompt 'Explain'
-      end, { desc = '[a]i [E]xplain selected...' }),
+      end, { noremap = true, silent = true, desc = '[a]i [E]xplain selected...' }),
 
       adapters = {
-        qwen25coder14b = function()
-          return require('codecompanion.adapters').extend('ollama', {
-            schema = {
-              model = { default = 'qwen2.5-coder:14b' },
-              num_ctx = { default = 16384 },
-            },
-            env = {
-              url = 'http://hampgoodwin.asuscomm.com:11434', -- optional: default value is ollama url http://127.0.0.1:11434
-            },
-          })
-        end,
         openrouter = function()
           return require('codecompanion.adapters').extend('openai_compatible', {
             env = {
@@ -52,9 +41,21 @@ return {
           slash_commands = {
             ['file'] = { opts = { provider = 'snacks' } },
           },
+          tools = {
+            ['mcp'] = {
+              -- Prevent mcphub from loading before needed
+              callback = function()
+                return require 'mcphub.extensions.codecompanion'
+              end,
+              description = 'Call tools and resources from the MCP Servers',
+              opts = {
+                requires_approval = true,
+              },
+            },
+          },
         },
         inline = {
-          adapter = 'openrouter',
+          adapter = 'openrouter_gemini',
         },
       },
 

@@ -34,7 +34,7 @@ return {
         },
         signature = { enabled = true },
         sources = {
-          default = { 'lsp', 'path', 'buffer', 'emoji', 'snippets' }, -- , snippets (req friendly-snippets),'avante_commands', 'avante_mentions', 'avante_files'
+          default = { 'lsp', 'path', 'emoji', 'snippets' }, -- , snippets (req friendly-snippets),'avante_commands', 'avante_mentions', 'avante_files'
 
           providers = {
             emoji = {

@@ -4,6 +4,7 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
+    'ravitemer/mcphub.nvim',
   },
   config = function()
     require('codecompanion').setup {
@@ -14,9 +15,15 @@ return {
 
       -- set keymaps
       vim.keymap.set('n', '<Leader>a\\', '<cmd>CodeCompanionChat toggle<CR>', { noremap = true, silent = true, desc = '[a]i toggle chat' }),
+      vim.keymap.set('n', '<Leader>aP', function()
+        require('codecompanion').actions {}
+      end, { noremap = true, silent = true, desc = '[a]i [P]alette...' }),
       vim.keymap.set('v', '<Leader>aE', function()
         require('codecompanion').prompt 'Explain'
       end, { noremap = true, silent = true, desc = '[a]i [E]xplain selected...' }),
+      vim.keymap.set('v', '<Leader>aD', function()
+        require('codecompanion').prompt 'Document'
+      end, { noremap = true, silent = false, desc = '[a]i [D]ocument...' }),
 
       adapters = {
         openrouter = function()
@@ -28,7 +35,7 @@ return {
             },
             schema = {
               model = {
-                default = 'anthropic/claude-3.7-sonnet',
+                default = 'anthropic/claude-sonnet-4',
               },
             },
           })
@@ -42,38 +49,98 @@ return {
             ['file'] = { opts = { provider = 'snacks' } },
           },
           tools = {
-            ['mcp'] = {
-              -- Prevent mcphub from loading before needed
-              callback = function()
-                return require 'mcphub.extensions.codecompanion'
-              end,
-              description = 'Call tools and resources from the MCP Servers',
+            opts = {
+              auto_submit_errors = true,
+              auto_submit_success = true,
+            },
+            ['buffer'] = {
               opts = {
+                default_params = 'watch',
+              },
+            },
+            ['cmd_runner'] = {
+              opts = {
+                provider = 'snacks',
                 requires_approval = true,
               },
             },
           },
         },
         inline = {
-          adapter = 'openrouter_gemini',
+          adapter = 'openrouter',
+        },
+      },
+
+      extensions = {
+        mcphub = {
+          callback = 'mcphub.extensions.codecompanion',
+          opts = {
+            show_result_in_chat = true, -- Show mcp tool results in chat
+            make_vars = true, -- Convert resources to #variables
+            make_slash_commands = true, -- Add prompts as /slash commands
+          },
         },
       },
 
       display = {
-        action_palette = { provider = 'default' }, -- 'default' for native, also 'telescope' and 'mini_pick'
+        action_palette = { provider = 'snacks' }, -- Can be "default", "telescope", "fzf_lua", "mini_pick" or "snacks". If not specified, the plugin will autodetect installed providers.
         chat = {
           intro_message = '✨CodeCompanion✨ ? for Opts',
+          icons = {
+            pinned_buffer = ' ',
+            watched_buffer = '👀 ',
+          },
           show_header_separator = false,
-          show_settings = false,
+          show_settings = true,
           start_in_insert_mode = false,
+          show_token_count = true, -- Show the token count for each response?
+          auto_scroll = false,
         },
         diff = {
           enabled = true,
+          close_chat_at = 240, -- Close an open chat buffer if the total columns of your display are less than...
+          layout = 'vertical', -- vertical|horizontal split for default provider
+          opts = { 'internal', 'filler', 'closeoff', 'algorithm:patience', 'followwrap', 'linematch:120' },
           provider = 'mini_diff', -- default|mini_diff
         },
       },
 
       prompt_library = {
+        ['Document'] = {
+          strategy = 'chat',
+          description = 'Document visual block of code',
+          opts = {
+            mapping = '<LocalLeader>aD',
+            modes = { 'v' },
+            short_name = 'Document',
+            auto_submit = true,
+            stop_context_insertion = false,
+          },
+          prompts = {
+            {
+              role = 'system',
+              content = function(context)
+                return 'You are an experienced '
+                  .. context.filetype
+                  .. ' engineer. You have experience on writing documentation and will be asked to write documentation.'
+              end,
+            },
+            {
+              role = 'user',
+              content = function(context)
+                local visual = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
+                return '@insert_edit_into_file write documentation for the following code in the #buffer , do not include an example:\n\n```'
+                  .. context.filetype
+                  .. '\n'
+                  .. visual
+                  .. '\n```\n'
+              end,
+              opts = {
+                contains_code = true,
+              },
+            },
+          },
+        },
         ['Explain'] = {
           strategy = 'chat',
           description = 'Explain the code in the file type',
@@ -83,7 +150,6 @@ return {
             short_name = 'Explain',
             auto_submit = false,
             stop_context_insertion = true,
-            user_promp = true,
           },
           prompts = {
             {
@@ -98,7 +164,7 @@ return {
               role = 'user',
               content = function(context)
                 local visual = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
-                return 'I have the following code:\n\n```' .. context.filetype .. '\n' .. visual .. '\n```\n\nPlease explain '
+                return 'I have the following code:\n\n```' .. context.filetype .. '\n' .. visual .. '\n```\n\n'
               end,
               opts = {
                 contains_code = true,

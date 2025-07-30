@@ -1,5 +1,4 @@
 return {
-  -- { 'saghen/blink.compat' },
   { -- optional blink completion source for require statements and module annotations
     'saghen/blink.cmp',
     version = '*',
@@ -7,11 +6,7 @@ return {
     dependencies = {
       'rafamadriz/friendly-snippets',
       'echasnovski/mini.icons',
-      'moyiz/blink-emoji.nvim',
     },
-    -- dir = '~/github.com/Saghen/blink.cmp',
-    -- url = 'https://github.com/Saghen/blink.cmp',
-    -- dev = true,
     config = function()
       require('blink.cmp').setup {
         keymap = {
@@ -34,47 +29,12 @@ return {
         },
         signature = { enabled = true },
         sources = {
-          default = { 'lsp', 'path', 'emoji', 'snippets' }, -- , snippets (req friendly-snippets),'avante_commands', 'avante_mentions', 'avante_files'
-
-          providers = {
-            emoji = {
-              module = 'blink-emoji',
-              name = 'Emoji',
-              score_offset = 15,
-              opts = { insert = true },
-              -- should_show_items = function()
-              --   return vim.tbl_contains(
-              --     -- Enable emoji completion only for git commits and markdown
-              --     -- By default, enabled fo rall file-types.
-              --     { 'gitcommit', 'markdown' },
-              --     vim.o.filetype
-              --   )
-              -- end,
-            },
-            --   avante_commands = {
-            --     name = 'avante_commands',
-            --     module = 'blink.compat.source',
-            --     score_offset = 90, -- show at a higher priority than lsp
-            --     opts = {},
-            --   },
-            --   avante_files = {
-            --     name = 'avante_files',
-            --     module = 'blink.compat.source',
-            --     score_offset = 100, -- show at a higher priority than lsp
-            --     opts = {},
-            --   },
-            --   avante_mentions = {
-            --     name = 'avante_mentions',
-            --     module = 'blink.compat.source',
-            --     score_offset = 1000, -- show at a higher priority than lsp
-            --     opts = {},
-            --   },
-          },
+          default = { 'lsp', 'path', 'snippets', 'buffer' },
         },
         fuzzy = { implementation = 'prefer_rust_with_warning' },
         completion = {
           documentation = {
-            auto_show = false, -- to display documentation automatically, set to true
+            auto_show = true, -- to display documentation automatically, set to true
             auto_show_delay_ms = 500,
           },
           menu = {

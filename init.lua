@@ -143,8 +143,6 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-  -- import all custom/plugins lua files
-  { import = 'custom.plugins' },
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
@@ -227,6 +225,9 @@ require('lazy').setup({
       },
     },
   },
+
+  -- import all custom/plugins lua files
+  { import = 'custom.plugins' },
 }, {})
 
 vim.cmd.colorscheme 'catppuccin'

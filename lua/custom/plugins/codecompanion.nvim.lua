@@ -4,7 +4,6 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
-    'ravitemer/mcphub.nvim',
   },
   config = function()
     require('codecompanion').setup {
@@ -71,16 +70,7 @@ return {
         },
       },
 
-      extensions = {
-        mcphub = {
-          callback = 'mcphub.extensions.codecompanion',
-          opts = {
-            show_result_in_chat = true, -- Show mcp tool results in chat
-            make_vars = true, -- Convert resources to #variables
-            make_slash_commands = true, -- Add prompts as /slash commands
-          },
-        },
-      },
+      extensions = {},
 
       display = {
         action_palette = { provider = 'snacks' }, -- Can be "default", "telescope", "fzf_lua", "mini_pick" or "snacks". If not specified, the plugin will autodetect installed providers.

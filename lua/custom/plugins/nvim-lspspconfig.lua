@@ -44,7 +44,7 @@ return {
             completeUnimported = true,
             usePlaceholders = true,
             buildFlags = { '-tags=integration' },
-            -- semanticTokens = true,
+            semanticTokens = true,
             vulncheck = 'Imports',
             -- analyses = {
             --   shadow = true,

@@ -17,9 +17,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
-    -- Useful status updates for LSP.
-    { 'j-hui/fidget.nvim', opts = {} },
-
     -- lazydev configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
     { 'folke/lazydev.nvim', opts = {} },
@@ -91,8 +88,8 @@ return {
     }
 
     for server_name, server_config in pairs(lsp_servers) do
-      vim.lsp.enable(server_name)
       vim.lsp.config(server_name, server_config)
+      vim.lsp.enable(server_name)
     end
   end,
 }

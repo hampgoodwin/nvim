@@ -6,8 +6,8 @@ return {
   opts = {
     flavour = 'auto',
     background = {
-      light = 'frappe',
-      dark = 'macchiato',
+      light = 'macchiato',
+      dark = 'frappe',
     },
     dim_inactive = {
       enabled = false, -- dims the background color of inactive window

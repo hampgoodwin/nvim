@@ -31,14 +31,12 @@ return {
         settings = {
           gopls = {
             gofumpt = true,
-            analyses = {
-              unusedvariable = true,
-              shadow = true,
-              useany = true,
-            },
+            -- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
             hints = {
               assignVariableTypes = true,
+              compositeLiteralFields = true,
               constantValues = true,
+              ignoredError = true,
               functionTypeParameters = true,
               parameterNames = true,
               rangeVariableTypes = true,
@@ -46,7 +44,24 @@ return {
             completeUnimported = true,
             usePlaceholders = true,
             buildFlags = { '-tags=integration' },
+            -- semanticTokens = true,
             vulncheck = 'Imports',
+            -- analyses = {
+            --   shadow = true,
+            --   -- default off analyzers
+            --   SA5011 = true, -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md#sa5011-possible-nil-pointer-dereference
+            --   SA6003 = true, -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md#sa6003-converting-a-string-to-a-slice-of-runes-before-ranging-over-it
+            --   SA9005 = true, -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md#sa9005-trying-to-marshal-a-struct-with-no-public-fields-nor-custom-marshaling
+            --   ST1000 = true, -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md#st1000-incorrect-or-missing-package-comment
+            --   ST1003 = true, -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md#st1003-poorly-chosen-identifier
+            --   ST1006 = true, -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md#st1006-poorly-chosen-receiver-name
+            --   ST1008 = true, -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md#st1008-a-functions-error-value-should-be-its-last-return-value
+            --   ST1016 = true, -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md#st1016-use-consistent-method-receiver-names
+            --   ST1021 = true, -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md#st1021-the-documentation-of-an-exported-type-should-start-with-types-name
+            --   ST1022 = true, -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md#st1022-the-documentation-of-an-exported-variable-or-constant-should-start-with-variables-name
+            -- },
+            -- https://github.com/golang/vscode-go/wiki/settings#uicodelenses
+            codelenses = { test = true },
           },
         },
       },

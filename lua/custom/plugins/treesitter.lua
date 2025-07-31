@@ -1,7 +1,9 @@
 return {
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    lazy = false,
     build = ':TSUpdate',
+    main = 'nvim-treesitter.configs',
     ---@type TSConfig
     ---@diagnostic disable-next-line: missing-fields
     opts = {
@@ -15,6 +17,7 @@ return {
         'c',
         'cpp',
         'go',
+        'gotmpl',
         'gomod',
         'gosum',
         'gowork',

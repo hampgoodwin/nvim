@@ -5,6 +5,8 @@ return {
     lazy = false,
     ---@class snacks.Config
     opts = {
+      animate = {},
+      bufdelete = {},
       dashboard = {
         sections = {
           { section = 'header' },
@@ -14,7 +16,12 @@ return {
           { section = 'startup' },
         },
       },
-      explorer = { enabled = false },
+      dim = {},
+      explorer = { enabled = false }, -- oil.nvim
+      indent = {},
+      input = {},
+      layout = {},
+      notify = {},
       picker = {
         enabled = true,
         sources = {
@@ -67,7 +74,10 @@ return {
           },
         },
       },
-      rename = { enabled = true },
+      rename = {},
+      scroll = {},
+      terminal = {},
+      win = {},
     },
     keys = {
       {

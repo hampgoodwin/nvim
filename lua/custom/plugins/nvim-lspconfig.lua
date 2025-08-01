@@ -5,12 +5,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(event)
     -- Rename the variable under your cursor.
     --  Most Language Servers support renaming across files, etc.
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = event.buf, desc = '[LSP] [R]e[n]ame' })
+    vim.keymap.set('n', '<leader>lrs', vim.lsp.buf.rename, { buffer = event.buf, desc = '[l]sp [r]ename [s]ymbol' })
     -- Execute a code action, usually your cursor needs to be on top of an error
     -- or a suggestion from your LSP for this to activate.
-    vim.keymap.set({ 'n', 'x' }, '<leader>ca', function()
+    vim.keymap.set({ 'n', 'x' }, '<leader>lca', function()
       require('tiny-code-action').code_action()
-    end, { buffer = event.buf, desc = '[LSP] [C]ode [A]ction' })
+    end, { buffer = event.buf, desc = '[l]sp [c]ode [a]ction' })
   end,
 })
 

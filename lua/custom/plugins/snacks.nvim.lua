@@ -78,7 +78,7 @@ return {
         },
       },
       rename = { enabled = true },
-      scroll = { enabled = true },
+      scroll = { enabled = true, animate = { duration = { step = 15, total = 180 } }, animate_repeat = { delay = 200, duration = { step = 5, total = 35 } } },
       statuscolum = { enabled = true },
       terminal = { enabled = true },
       win = { enabled = true },
@@ -150,11 +150,11 @@ return {
         desc = 'Find Files',
       },
       {
-        '<leader>fg',
+        '<leader>fgf',
         function()
           Snacks.picker.git_files()
         end,
-        desc = 'Find Git Files',
+        desc = '[f]ind [g]it files',
       },
       {
         '<leader>fp',
@@ -172,53 +172,53 @@ return {
       },
       -- git
       {
-        '<leader>gb',
+        '<leader>fgb',
         function()
           Snacks.picker.git_branches()
         end,
-        desc = 'Git Branches',
+        desc = '[f]ind [g]it [b]ranches',
       },
       {
-        '<leader>gl',
+        '<leader>fgl',
         function()
           Snacks.picker.git_log()
         end,
-        desc = 'Git Log',
+        desc = '[f]ind [g]it [l]og',
       },
       {
-        '<leader>gL',
+        '<leader>fgL',
         function()
           Snacks.picker.git_log_line()
         end,
-        desc = 'Git Log Line',
+        desc = '[f]ind [g]it log [L]ine',
       },
       {
-        '<leader>gs',
+        '<leader>fgs',
         function()
           Snacks.picker.git_status()
         end,
-        desc = 'Git Status',
+        desc = '[f]ind [g]it [s]tatus',
       },
       {
-        '<leader>gS',
+        '<leader>fgS',
         function()
           Snacks.picker.git_stash()
         end,
-        desc = 'Git Stash',
+        desc = '[f]ind [g]it [s]tash',
       },
       {
-        '<leader>gd',
+        '<leader>fgd',
         function()
           Snacks.picker.git_diff()
         end,
-        desc = 'Git Diff (Hunks)',
+        desc = '[f]ind [g]it [d]iff (Hunks)',
       },
       {
-        '<leader>gf',
+        '<leader>fgf',
         function()
           Snacks.picker.git_log_file()
         end,
-        desc = 'Git Log File',
+        desc = '[f]ind [g]it log [f]ile',
       },
       -- Grep
       {
@@ -493,26 +493,26 @@ return {
         desc = 'Delete Buffer',
       },
       {
-        '<leader>cR',
+        '<leader>rnf',
         function()
           Snacks.rename.rename_file()
         end,
-        desc = 'Rename File',
+        desc = '[r]ename file',
       },
       {
-        '<leader>gB',
+        '<leader>fgB',
         function()
           Snacks.gitbrowse()
         end,
-        desc = 'Git Browse',
+        desc = '[g]it [B]rowse',
         mode = { 'n', 'v' },
       },
       {
-        '<leader>gg',
+        '<leader>GL',
         function()
           Snacks.lazygit()
         end,
-        desc = 'Lazygit',
+        desc = '[G]it [L]azygit',
       },
       {
         '<leader>un',

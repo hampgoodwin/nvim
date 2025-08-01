@@ -2,8 +2,7 @@ return { -- Useful plugin to show you pending keybinds.
   'folke/which-key.nvim',
   dependencies = { 'echasnovski/mini.icons' },
   event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-  mappings = vim.g.have_nerd_font,
-  keys = vim.g.have_nerd_font and {
+  keys = {
     {
       '<leader>?',
       function()
@@ -13,6 +12,16 @@ return { -- Useful plugin to show you pending keybinds.
     },
   },
   config = function() -- This is the function that runs, AFTER loading
-    require('which-key').setup()
+    local wk = require 'which-key'
+
+    wk.add {
+      { '<leader>a', group = '[a]i', icon = { icon = '󱚝', color = 'red' } },
+      { '<leader>f', group = '[f]ind', icon = { icon = '', color = 'blue' } },
+      { '<leader>fg', group = '[f]ind [g]it', icon = { icon = '', color = 'green' } },
+      { '<leader>G', group = '[g]it', icon = { icon = '', color = 'green' } },
+      { '<leader>l', group = '[l]sp', icon = { icon = '', color = 'green' } },
+      { '<leader>r', group = '[r]ename', icon = { icon = '󰑕', color = 'red' } },
+      { '<leader>rn', group = 're[n]ame', icon = { icon = '󰑕', color = 'red' } },
+    }
   end,
 }

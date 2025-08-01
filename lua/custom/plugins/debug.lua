@@ -15,14 +15,65 @@ return {
     'rcarriga/nvim-dap-ui',
 
     -- Required dependency for nvim-dap-ui
-    'nvim-neotest/nvim-nio',
-
-    -- Installs the debug adapters for you
-    -- 'williamboman/mason.nvim',
-    -- 'jay-babu/mason-nvim-dap.nvim',
+    {
+      'nvim-neotest/nvim-nio',
+    },
+    {
+      'nvim-neotest/neotest',
+      dependencies = {
+        'nvim-neotest/nvim-nio',
+        'nvim-lua/plenary.nvim',
+        'antoinemadec/FixCursorHold.nvim',
+        'nvim-neotest/neotest-go',
+        'nvim-neotest/neotest-jest',
+      },
+      config = function()
+        -- get neotest namespace (api call creates or returns namespace)
+        local neotest_ns = vim.api.nvim_create_namespace 'neotest'
+        vim.diagnostic.config({
+          virtual_text = {
+            format = function(diagnostic)
+              local message = diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
+              return message
+            end,
+          },
+        }, neotest_ns)
+        require('neotest').setup {
+          -- your neotest config here
+          adapters = {
+            -- require 'neotest-plenary',
+            require 'neotest-go' {
+              recursive_run = true,
+              experimental = {
+                test_table = true,
+              },
+              args = { '-count=1' },
+            },
+            require 'neotest-jest' {
+              jestCommand = 'npm test --',
+              jestConfigFile = 'custom.jest.config.ts',
+              env = { CI = true },
+              cwd = function(path)
+                return vim.fn.getcwd()
+              end,
+            },
+          },
+        }
+      end,
+    },
 
     -- Add your own debuggers here
-    'leoluz/nvim-dap-go',
+    'leoluz/nvim-dap-go', -- go, so ez
+    { -- js, not so ez ;(
+      'mxsdev/nvim-dap-vscode-js',
+      dependencies = {
+        {
+          'microsoft/vscode-js-debug',
+          version = '1.x',
+          build = 'npm i && npm run compile vsDebugServerBundle && mv dist out',
+        },
+      },
+    },
   },
   config = function()
     local dap = require 'dap'
@@ -74,40 +125,11 @@ return {
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-    -- adapters
-    dap.adapters['pwa-node'] = {
-      type = 'server',
-      host = 'localhost',
-      port = '${port}',
-      executable = {
-        command = 'node',
-        args = { 'js-debug', '${port}' },
-      },
-    }
-
-    -- configurations
-    dap.configurations.typescript = {
-      {
-        type = 'pwa-node',
-        request = 'launch',
-        name = 'Launch File',
-        runtimeExecutable = 'deno',
-        runtimeArgs = {
-          'run',
-          '--inspect-wait',
-          '--allow-all',
-        },
-        program = '${file}',
-        cwd = '${workspaceFolder}',
-        attachSimplePort = 9229,
-      },
-    }
-
     --
     --CUSTOM
     --
 
-    -- Install golang specific config
+    -- configure go dap
     require('dap-go').setup {
       dap_configurations = {
         -- {
@@ -126,5 +148,53 @@ return {
         verbose = true,
       },
     }
+
+    -- configure javascript and typescript dap
+    require('dap-vscode-js').setup {
+      debugger_path = vim.fn.stdpath 'data' .. '/lazy/vscode-js-debug',
+      adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' },
+    }
+    local js_based_languages = { 'typescript', 'javascript', 'typescriptreact' }
+    for _, language in ipairs(js_based_languages) do
+      require('dap').configurations[language] = {
+        {
+          type = 'pwa-node',
+          request = 'launch',
+          name = 'Launch file',
+          program = '${file}',
+          cwd = '${workspaceFolder}',
+        },
+        {
+          type = 'pwa-node',
+          request = 'attach',
+          name = 'Attach',
+          processId = require('dap.utils').pick_process,
+          cwd = '${workspaceFolder}',
+        },
+        {
+          type = 'pwa-chrome',
+          request = 'launch',
+          name = 'Start Chrome with "localhost"',
+          url = 'http://localhost:3000',
+          webRoot = '${workspaceFolder}',
+          userDataDir = '${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir',
+        },
+        {
+          type = 'pwa-node',
+          request = 'launch',
+          name = 'Debug Jest Tests',
+          -- trace = true, -- include debugger info
+          runtimeExecutable = 'node',
+          runtimeArgs = {
+            './node_modules/jest/bin/jest.js',
+            '--runInBand',
+          },
+          rootPath = '${workspaceFolder}',
+          cwd = '${workspaceFolder}',
+          console = 'integratedTerminal',
+          internalConsoleOptions = 'neverOpen',
+        },
+      }
+    end
   end,
 }

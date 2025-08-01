@@ -16,12 +16,14 @@ return { -- Useful plugin to show you pending keybinds.
 
     wk.add {
       { '<leader>a', group = '[a]i', icon = { icon = '󱚝', color = 'red' } },
-      { '<leader>f', group = '[f]ind', icon = { icon = '', color = 'blue' } },
+      { '<leader>f', group = '[f]ind', icon = { icon = '', color = 'blue' } },
       { '<leader>fg', group = '[f]ind [g]it', icon = { icon = '', color = 'green' } },
       { '<leader>G', group = '[g]it', icon = { icon = '', color = 'green' } },
       { '<leader>l', group = '[l]sp', icon = { icon = '', color = 'green' } },
       { '<leader>r', group = '[r]ename', icon = { icon = '󰑕', color = 'red' } },
       { '<leader>rn', group = 're[n]ame', icon = { icon = '󰑕', color = 'red' } },
+      { '<leader>s', group = '[s]earch', icon = { icon = '', color = 'red' } },
+      { '<leader>u', group = 'toggle', icon = { icon = '󰔢', color = 'yellow' } },
     }
   end,
 }

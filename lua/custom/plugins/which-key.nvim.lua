@@ -24,6 +24,7 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>rn', group = 're[n]ame', icon = { icon = '󰑕', color = 'red' } },
       { '<leader>s', group = '[s]earch', icon = { icon = '', color = 'red' } },
       { '<leader>u', group = 'toggle', icon = { icon = '󰔢', color = 'yellow' } },
+      { '<leader>d', group = 'debug', icon = { icon = '', color = 'red' } },
     }
   end,
 }

@@ -68,10 +68,12 @@ return {
     'leoluz/nvim-dap-go', -- go, so ez
     { -- js, not so ez ;(
       'mxsdev/nvim-dap-vscode-js',
+      enabled = true,
       dependencies = {
         {
           'microsoft/vscode-js-debug',
-          version = '1.x',
+          opt = true,
+          build = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
           -- build = 'npm i && npm run compile vsDebugServerBundle && mv dist out',
         },
       },

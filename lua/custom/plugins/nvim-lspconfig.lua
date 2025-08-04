@@ -64,7 +64,7 @@ return {
           },
         },
       },
-      nil_ls = {},
+      nixd = {},
       jsonls = {},
       ts_ls = {},
       terraformls = {},

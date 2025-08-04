@@ -134,13 +134,13 @@ return {
     -- configure go dap
     require('dap-go').setup {
       dap_configurations = {
-        {
-          type = 'go',
-          name = 'Debug Test with args as Environment Variables',
-          program = require('dap-go').get_arguments() .. ' ${file}',
-          mode = 'remote',
-          request = 'attach',
-        },
+        -- {
+        --   type = 'go',
+        --   name = 'Debug Test with args as Environment Variables',
+        --   program = require('dap-go').get_arguments() .. ' ${file}',
+        --   mode = 'remote',
+        --   request = 'attach',
+        -- },
         {
           type = 'go',
           name = 'Debug (Build Flags & Arguments)',

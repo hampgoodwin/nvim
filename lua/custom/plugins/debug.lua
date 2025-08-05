@@ -1,50 +1,37 @@
--- debug.lua
---
--- Shows how to use the DAP plugin to debug your code.
---
--- Primarily focused on configuring the debugger for Go, but can
--- be extended to other languages as well. That's why it's called
--- kickstart.nvim and not kitchen-sink.nvim ;)
-
 return {
-  -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
-  -- NOTE: And you can specify dependencies as well
   dependencies = {
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
+    {
+      'theHamsta/nvim-dap-virtual-text',
+      opts = {},
+    },
 
     -- Required dependency for nvim-dap-ui
     'nvim-neotest/nvim-nio',
 
     -- Add your own debuggers here
-    'leoluz/nvim-dap-go', -- go, so ez
-    -- { -- js, not so ez ;(
-    --   'mxsdev/nvim-dap-vscode-js',
-    --   enabled = true,
-    --   dependencies = {
-    --     {
-    --       'microsoft/vscode-js-debug',
-    --       opt = true,
-    --       build = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
-    --       -- build = 'npm i && npm run compile vsDebugServerBundle && mv dist out',
-    --     },
-    --   },
-    -- },
+    'leoluz/nvim-dap-go', -- go, so ez -- I wonder if I even need this anymore..?
   },
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
 
+    dap.set_log_level 'TRACE'
+
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
+    -- vim.keymap.set('n', '<leader>da', function()
+    --   dap.continue { before = get_args }
+    -- end, { desc = '[d]debug with [a]rgs' })
     vim.keymap.set('n', '<F6>', dap.terminate, { desc = 'Debug: Terminate' })
     vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
     vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
     vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
     vim.keymap.set('n', '<F9>', dap.run_last, { desc = 'Debug: Run Last' })
     vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { desc = '[d]ebug: toggle [b]reakpoint' })
-    vim.keymap.set('n', '<leader>B', function()
+    vim.keymap.set('n', '<leader>dB', function()
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
     end, { desc = '[d]ebug set [B]reakpoint' })
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
@@ -53,9 +40,6 @@ return {
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {
-      -- Set icons to characters that are more likely to work in every terminal.
-      --    Feel free to remove or use ones that you like more! :)
-      --    Don't feel like these are good choices.
       icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
       controls = {
         icons = {
@@ -111,5 +95,50 @@ return {
         verbose = true,
       },
     }
+
+    dap.adapters['pwa-node'] = {
+      type = 'server',
+      host = 'localhost',
+      port = '${port}',
+      executable = {
+        command = 'js-debug',
+        args = { '${port}' },
+      },
+      options = {
+        initialize_timeout_sec = 10,
+      },
+    }
+
+    for _, l in ipairs { 'typescript', 'javascript' } do
+      dap.configurations[l] = {
+        {
+          type = 'pwa-node',
+          request = 'launch',
+          name = 'Launch Current File (pwa-node)',
+          cwd = vim.fn.getcwd(),
+          program = '${file}', -- Use program instead of args
+          sourceMaps = true,
+          protocol = 'inspector',
+          resolveSourceMapLocations = {
+            '${workspaceFolder}/**',
+            '!**/node_modules/**',
+          },
+        },
+        {
+          type = 'pwa-node',
+          request = 'launch',
+          name = 'Launch Test Current File (pwa-node with jest)',
+          cwd = vim.fn.getcwd(),
+          runtimeArgs = { '${workspaceFolder}/node_modules/.bin/jest' },
+          runtimeExecutable = 'node',
+          args = { '${file}', '--coverage', 'false' },
+          rootPath = '${workspaceFolder}',
+          sourceMaps = true,
+          console = 'integratedTerminal',
+          internalConsoleOptions = 'neverOpen',
+          skipFiles = { '<node_internals>/**', 'node_modules/**' },
+        },
+      }
+    end
   end,
 }

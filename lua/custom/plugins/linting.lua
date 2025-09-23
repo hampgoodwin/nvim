@@ -8,7 +8,7 @@ return {
 
     lint.linters_by_ft = {
       -- go linting
-      go = { 'golangcilint' },
+      -- go = { 'golangcilint' },
       -- javascript/typescript linting
       javascript = { 'eslint_d' },
       javascriptreact = { 'eslint_d' },

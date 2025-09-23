@@ -1,7 +1,7 @@
 return {
   { -- optional blink completion source for require statements and module annotations
     'saghen/blink.cmp',
-    version = '*',
+    version = '1.*',
     lazy = false,
     dependencies = {
       'rafamadriz/friendly-snippets',
@@ -41,11 +41,12 @@ return {
             draw = {
               treesitter = { 'lsp' },
               align_to = 'kind_icon',
-              -- columns = {
-              --   { 'kind_icon' },
-              --   { 'source_name', gap = 1 },
-              --   { 'label', 'label_description', gap = 1 },
-              -- },
+              columns = {
+                { 'kind_icon' },
+                { 'source_name', gap = 1 },
+                { 'kind', gap = 1 },
+                { 'label', 'label_description', gap = 1 },
+              },
               components = {
                 kind_icon = {
                   text = function(ctx)

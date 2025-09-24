@@ -4,7 +4,7 @@ return {
     version = '1.*',
     lazy = false,
     dependencies = {
-      'rafamadriz/friendly-snippets',
+      'echasnovski/mini.snippets',
       'echasnovski/mini.icons',
     },
     config = function()
@@ -14,7 +14,7 @@ return {
           -- Manually invoke snippets completion
           ['<C-\\>'] = {
             function(cmp)
-              cmp.show { providers = { 'snippets' } }
+              cmp.show { providers = { 'snippets', 'buffer' } }
             end,
           },
         },
@@ -28,8 +28,9 @@ return {
           nerd_font_variant = 'mono',
         },
         signature = { enabled = true },
+        snippets = { preset = 'mini_snippets' },
         sources = {
-          default = { 'lsp', 'path', 'snippets', 'buffer' },
+          default = { 'lsp', 'path' }, -- 'snippets','buffer'
         },
         fuzzy = { implementation = 'prefer_rust_with_warning' },
         completion = {
@@ -43,9 +44,10 @@ return {
               align_to = 'kind_icon',
               columns = {
                 { 'kind_icon' },
-                { 'source_name', gap = 1 },
                 { 'kind', gap = 1 },
                 { 'label', 'label_description', gap = 1 },
+                { 'source_name', gap = 1 },
+                { 'source_id', gap = 1 },
               },
               components = {
                 kind_icon = {

@@ -183,8 +183,9 @@ require('lazy').setup({
       require('mini.surround').setup()
       require('mini.pairs').setup()
       require('mini.icons').setup()
+      require('mini.snippets').setup()
 
-      require('mini.diff').setup { verion = '*' }
+      require('mini.diff').setup { version = '*' }
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,

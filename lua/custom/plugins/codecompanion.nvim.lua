@@ -1,6 +1,6 @@
 return {
   'olimorris/codecompanion.nvim',
-  version = 'v17.14.0',
+  version = 'v17.23.0',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
@@ -14,6 +14,7 @@ return {
 
       -- set keymaps
       vim.keymap.set('n', '<Leader>a\\', '<cmd>CodeCompanionChat toggle<CR>', { noremap = true, silent = true, desc = '[a]i toggle chat' }),
+      vim.keymap.set('n', '<Leader>aa', '<cmd>CodeCompanionChat Add<CR>', { noremap = true, silent = true, desc = '[a]a [a]dd chat' }),
       vim.keymap.set('n', '<Leader>aP', function()
         require('codecompanion').actions {}
       end, { noremap = true, silent = true, desc = '[a]i [P]alette...' }),
@@ -24,26 +25,10 @@ return {
         require('codecompanion').prompt 'Document'
       end, { noremap = true, silent = false, desc = '[a]i [D]ocument...' }),
 
-      adapters = {
-        openrouter = function()
-          return require('codecompanion.adapters').extend('openai_compatible', {
-            env = {
-              url = 'https://openrouter.ai/api',
-              api_key = 'cmd:echo $OPENROUTER_API_KEY', -- name (openrouter) + _API_KEY
-              chat_url = '/v1/chat/completions',
-            },
-            schema = {
-              model = {
-                default = 'anthropic/claude-sonnet-4',
-              },
-            },
-          })
-        end,
-      },
-
       strategies = {
         chat = {
-          adapter = 'openrouter',
+          adapter = 'gemini',
+          model = 'gemini-2.5-pro',
           slash_commands = {
             ['file'] = { opts = { provider = 'snacks' } },
           },
@@ -66,7 +51,8 @@ return {
           },
         },
         inline = {
-          adapter = 'openrouter',
+          adapter = 'gemini',
+          model = 'gemini-2.5-flash',
         },
       },
 
@@ -119,7 +105,7 @@ return {
               role = 'user',
               content = function(context)
                 local visual = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
-                return '@insert_edit_into_file write documentation for the following code in the #buffer , do not include an example:\n\n```'
+                return '@{insert_edit_into_file} write documentation for the following code in the #{buffer} , do not include an example:\n\n```'
                   .. context.filetype
                   .. '\n'
                   .. visual

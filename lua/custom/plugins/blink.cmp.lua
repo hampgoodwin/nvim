@@ -1,11 +1,12 @@
 return {
   { -- optional blink completion source for require statements and module annotations
     'saghen/blink.cmp',
-    version = '1.*',
+    version = '1.6',
     lazy = false,
     dependencies = {
       'echasnovski/mini.snippets',
       'echasnovski/mini.icons',
+      'neovim/nvim-lspconfig',
     },
     config = function()
       require('blink.cmp').setup {
@@ -44,10 +45,8 @@ return {
               align_to = 'kind_icon',
               columns = {
                 { 'kind_icon' },
-                { 'kind', gap = 1 },
                 { 'label', 'label_description', gap = 1 },
-                { 'source_name', gap = 1 },
-                { 'source_id', gap = 1 },
+                { 'source_name' },
               },
               components = {
                 kind_icon = {

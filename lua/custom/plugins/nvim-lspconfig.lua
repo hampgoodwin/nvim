@@ -42,11 +42,10 @@ return {
             },
             completeUnimported = true,
             usePlaceholders = true,
-            buildFlags = { '-tags=integration' },
             semanticTokens = true,
             vulncheck = 'Imports',
             -- https://github.com/golang/vscode-go/wiki/settings#uicodelenses
-            codelenses = { test = true },
+            codelenses = { generate = true, run_govulncheck = true, test = true, tidy = true },
           },
         },
       },
@@ -75,5 +74,17 @@ return {
       vim.lsp.config(server_name, server_config)
       vim.lsp.enable(server_name)
     end
+
+    vim.diagnostic.config {
+      -- virtual_lines = true,
+      -- virtual_text = true,
+      underline = true,
+      update_in_insert = true,
+      severity_sort = true,
+      float = {
+        border = 'rounded',
+        source = true,
+      },
+    }
   end,
 }

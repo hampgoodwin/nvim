@@ -1,6 +1,7 @@
 return {
   'olimorris/codecompanion.nvim',
   version = 'v17.23.0',
+  -- lazy = false,
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
@@ -36,12 +37,11 @@ return {
           },
         },
       },
-      -- inline = {
-      --   adapter = 'gemini',
-      --   model = 'gemini-2.5-flash',
-      -- },
+      inline = {
+        adapter = 'gemini',
+        model = 'gemini-2.5-flash',
+      },
     },
-    extensions = {},
     display = {
       action_palette = { provider = 'snacks' }, -- Can be "default", "telescope", "fzf_lua", "mini_pick" or "snacks". If not specified, the plugin will autodetect installed providers.
       chat = {
@@ -127,31 +127,25 @@ return {
     },
   },
   keys = {
-    { 'n', '<Leader>a\\', '<cmd>CodeCompanionChat toggle<CR>', { desc = '[a]i toggle chat' } },
-    { 'n', '<Leader>aa', '<cmd>CodeCompanionChat Add<CR>', { desc = '[a]a [a]dd chat' } },
+    { '<C-a>', '<cmd>CodeCompanionActions<CR>', desc = 'c[a]i action' },
+    { '<leader>a\\', '<cmd>CodeCompanionChat toggle<CR>', desc = '[a]i toggle chat' },
+    { '<leader>aa', '<cmd>CodeCompanionChat Add<CR>', desc = '[a]i [a]dd chat' },
+    { '<leader>aP', '<cmd>CodeCompanionActions<CR>', desc = '[a]i [P]alette...' },
     {
-      'n',
-      '<Leader>aP',
-      function()
-        require('codecompanion').actions {}
-      end,
-      { desc = '[a]i [P]alette...' },
-    },
-    {
-      'v',
-      '<Leader>aE',
+      '<leader>aE',
       function()
         require('codecompanion').prompt 'Explain'
       end,
-      { desc = '[a]i [E]xplain selected...' },
+      mode = 'v',
+      desc = '[a]i [E]xplain selected...',
     },
     {
-      'v',
-      '<Leader>aD',
+      '<leader>aD',
       function()
         require('codecompanion').prompt 'Document'
       end,
-      { desc = '[a]i [D]ocument...' },
+      mode = 'v',
+      desc = '[a]i [D]ocument...',
     },
   },
 }

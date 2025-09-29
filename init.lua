@@ -185,7 +185,15 @@ require('lazy').setup({
       require('mini.icons').setup()
       require('mini.snippets').setup()
 
-      require('mini.diff').setup { version = '*' }
+      require('mini.diff').setup {
+        version = '*',
+        config = function()
+          local diff = require 'mini.diff'
+          diff.setup {
+            source = diff.gen_source.non(),
+          }
+        end,
+      }
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,

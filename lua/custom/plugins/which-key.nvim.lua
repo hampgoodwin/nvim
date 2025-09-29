@@ -15,7 +15,7 @@ return { -- Useful plugin to show you pending keybinds.
     local wk = require 'which-key'
 
     wk.add {
-      { '<leader>a', group = '[a]i', icon = { icon = '󱚝', color = 'red' } },
+      { '<leader>a', group = '[a]i', icon = { icon = '󱚝', color = 'red' }, mode = { 'n', 'v' } },
       { '<leader>f', group = '[f]ind', icon = { icon = '', color = 'blue' } },
       { '<leader>fg', group = '[f]ind [g]it', icon = { icon = '', color = 'green' } },
       { '<leader>G', group = '[g]it', icon = { icon = '', color = 'green' } },

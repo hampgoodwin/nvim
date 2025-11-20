@@ -4,11 +4,16 @@ return {
     'nvim-neotest/nvim-nio',
     'nvim-lua/plenary.nvim',
     'antoinemadec/FixCursorHold.nvim',
-    'nvim-treesitter/nvim-treesitter',
+    {
+      'nvim-treesitter/nvim-treesitter', -- Optional, but recommended
+      branch = 'main', -- NOTE; not the master branch!
+    },
 
     -- adapters
-    'nvim-neotest/neotest-go',
-    'nvim-neotest/neotest-jest',
+    {
+      'fredrikaverpil/neotest-golang',
+      version = '*', -- Optional, but recommended; track releases
+    },
   },
 
   config = function()
@@ -30,28 +35,13 @@ return {
       require('neotest').summary.toggle()
     end, { desc = '[d]ebug [n]eotest [s]ummary' })
 
+    local neotestGolangConfig = {
+      runner = 'gotestsum',
+    }
+
     require('neotest').setup {
       adapters = {
-        require 'neotest-go' {},
-        require 'neotest-jest' {
-          jestCommand = 'npm test --',
-          jestConfigFile = 'custom.jest.config.ts',
-          env = {
-            CI = true,
-            POSTGRES_PORT = '5441',
-            POSTGRES_HOST = '127.0.0.1',
-            POSTGRES_DB = 'ghost',
-            POSTGRES_USER = 'ghost',
-            POSTGRES_PASSWORD = 'ghost',
-            NATS_SERVER_URLS = 'nats://localhost:14222',
-            REDIS_CACHE_PORT = '6377',
-            REDIS_CACHE_HOST = 'localhost',
-            KEEPA_API_KEY = 'test',
-          },
-          cwd = function(path)
-            return vim.fn.getcwd()
-          end,
-        },
+        require 'neotest-golang' { neotestGolangConfig },
       },
     }
   end,

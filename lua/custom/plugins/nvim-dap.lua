@@ -22,6 +22,9 @@ return {
 
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
+    vim.keymap.set('n', '<leader>dt', function()
+      require('dap-go').debug_test()
+    end, { desc = '[d]ebug nearest [t]est' })
     -- vim.keymap.set('n', '<leader>da', function()
     --   dap.continue { before = get_args }
     -- end, { desc = '[d]debug with [a]rgs' })
@@ -81,10 +84,9 @@ return {
       dap_configurations = {
         {
           type = 'go',
-          name = 'Debug (Build Flags & Arguments)',
+          name = 'Debug (Build Flags)',
           request = 'launch',
           program = '${file}',
-          args = require('dap-go').get_arguments,
           buildFlags = require('dap-go').get_build_flags,
         },
       },
@@ -95,50 +97,5 @@ return {
         verbose = true,
       },
     }
-
-    dap.adapters['pwa-node'] = {
-      type = 'server',
-      host = 'localhost',
-      port = '${port}',
-      executable = {
-        command = 'js-debug',
-        args = { '${port}' },
-      },
-      options = {
-        initialize_timeout_sec = 10,
-      },
-    }
-
-    for _, l in ipairs { 'typescript', 'javascript' } do
-      dap.configurations[l] = {
-        {
-          type = 'pwa-node',
-          request = 'launch',
-          name = 'Launch Current File (pwa-node)',
-          cwd = vim.fn.getcwd(),
-          program = '${file}', -- Use program instead of args
-          sourceMaps = true,
-          protocol = 'inspector',
-          resolveSourceMapLocations = {
-            '${workspaceFolder}/**',
-            '!**/node_modules/**',
-          },
-        },
-        {
-          type = 'pwa-node',
-          request = 'launch',
-          name = 'Launch Test Current File (pwa-node with jest)',
-          cwd = vim.fn.getcwd(),
-          runtimeArgs = { '${workspaceFolder}/node_modules/.bin/jest' },
-          runtimeExecutable = 'node',
-          args = { '${file}', '--coverage', 'false' },
-          rootPath = '${workspaceFolder}',
-          sourceMaps = true,
-          console = 'integratedTerminal',
-          internalConsoleOptions = 'neverOpen',
-          skipFiles = { '<node_internals>/**', 'node_modules/**' },
-        },
-      }
-    end
   end,
 }

@@ -8,14 +8,14 @@ return {
   },
   opts = {
     opts = {
-      log_level = 'WARN', -- TRACE|DEBUG|ERROR|INFO
+      log_level = 'TRACE', -- TRACE|DEBUG|ERROR|INFO
       language = 'English',
     },
 
-    strategies = {
+    interactions = {
       chat = {
         adapter = 'gemini',
-        model = 'gemini-2.5-pro',
+        model = 'gemini-3-pro-preview',
         slash_commands = {
           ['file'] = { opts = { provider = 'snacks' } },
         },
@@ -26,45 +26,54 @@ return {
           },
           ['buffer'] = {
             opts = {
-              default_params = 'watch',
+              default_params = 'diff',
             },
           },
           ['cmd_runner'] = {
             opts = {
               provider = 'snacks',
-              requires_approval = true,
+              requires_approval_before = true,
             },
           },
         },
       },
       inline = {
         adapter = 'gemini',
-        model = 'gemini-2.5-flash',
+        model = 'gemini-3-pro-preview',
       },
     },
     display = {
-      action_palette = { provider = 'snacks' }, -- Can be "default", "telescope", "fzf_lua", "mini_pick" or "snacks". If not specified, the plugin will autodetect installed providers.
+      action_palette = {
+        provider = 'snacks', -- Can be "default", "telescope", "fzf_lua", "mini_pick" or "snacks". If not specified, the plugin will autodetect installed providers.
+        show_preset_prompts = false,
+      },
       chat = {
         intro_message = '✨CodeCompanion✨ ? for Opts',
-        icons = {
-          pinned_buffer = ' ',
-          watched_buffer = '👀 ',
+        opts = {
+          completion_provider = 'blink', -- blink|cmp|coc|default
         },
+        auto_scroll = true,
         show_header_separator = false,
         show_settings = false,
         start_in_insert_mode = false,
+        fold_reasoning = false,
+        show_reasoning = false,
+        show_tools_processing = true, -- Show the loading message when tools are being executed?
         show_token_count = true, -- Show the token count for each response?
-        auto_scroll = false,
+      },
+      diff = {
+        enabled = true,
+        provider = 'mini.diff',
       },
     },
     prompt_library = {
       ['Document'] = {
-        strategy = 'chat',
+        interaction = 'chat',
         description = 'Document visual block of code',
         opts = {
+          alias = 'Document',
           mapping = '<LocalLeader>aD',
           modes = { 'v' },
-          short_name = 'Document',
           auto_submit = true,
           stop_context_insertion = false,
         },
@@ -94,12 +103,12 @@ return {
         },
       },
       ['Explain'] = {
-        strategy = 'chat',
+        interaction = 'chat',
         description = 'Explain the code in the file type',
         opts = {
+          alias = 'Explain',
           mapping = '<LocalLeader>aE',
           modes = { 'v' },
-          short_name = 'Explain',
           auto_submit = false,
           stop_context_insertion = true,
         },
@@ -127,7 +136,7 @@ return {
     },
   },
   keys = {
-    { '<C-a>', '<cmd>CodeCompanionActions<CR>', desc = 'c[a]i action' },
+    { '<C-a>', '<cmd>CodeCompanionActions<CR>', mode = { 'n', 'v' }, desc = 'c[a]i action' },
     { '<leader>a\\', '<cmd>CodeCompanionChat toggle<CR>', desc = '[a]i toggle chat' },
     { '<leader>aa', '<cmd>CodeCompanionChat Add<CR>', desc = '[a]i [a]dd chat' },
     { '<leader>aP', '<cmd>CodeCompanionActions<CR>', desc = '[a]i [P]alette...' },

@@ -26,6 +26,9 @@ return {
   },
   config = function()
     local lsp_servers = {
+      -- spellchecking
+      typos_lsp = {},
+      -- go
       gopls = {
         settings = {
           gopls = {

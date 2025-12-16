@@ -1,7 +1,7 @@
 return {
   { -- optional blink completion source for require statements and module annotations
     'saghen/blink.cmp',
-    version = '1.6',
+    version = '1.8',
     lazy = false,
     dependencies = {
       'echasnovski/mini.snippets',

@@ -25,6 +25,9 @@ return {
     { 'saghen/blink.cmp' },
   },
   config = function()
+    local configs = require 'lspconfig.configs'
+    local util = require 'lspconfig.util'
+
     local lsp_servers = {
       -- spellchecking
       typos_lsp = {},
@@ -53,7 +56,7 @@ return {
           },
         },
       },
-      -- rust_analyzer = {},
+      buf_ls = {},
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
@@ -75,6 +78,7 @@ return {
       -- python
       ruff = {},
       pyright = {},
+      typos_lsp = {},
     }
 
     for server_name, server_config in pairs(lsp_servers) do

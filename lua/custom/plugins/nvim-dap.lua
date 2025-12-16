@@ -3,14 +3,8 @@ return {
   dependencies = {
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
-    -- {
-    --   'theHamsta/nvim-dap-virtual-text',
-    --   opts = {},
-    -- },
-
     -- Required dependency for nvim-dap-ui
     'nvim-neotest/nvim-nio',
-
     -- Add your own debuggers here
     'leoluz/nvim-dap-go', -- go, so ez -- I wonder if I even need this anymore..?
   },
@@ -84,15 +78,16 @@ return {
       dap_configurations = {
         {
           type = 'go',
-          name = 'Debug (Build Flags)',
+          name = 'Debug (integration)',
           request = 'launch',
-          program = '${file}',
-          buildFlags = require('dap-go').get_build_flags,
+          outputMode = 'remote',
+          program = '${./relativeFileDirname}',
+          buildFlags = '-tags=integration',
         },
       },
-      delve = {
-        initialize_timeout_sec = 20,
-      },
+      -- delve = {
+      --   initialize_timeout_sec = 20,
+      -- },
       tests = {
         verbose = true,
       },

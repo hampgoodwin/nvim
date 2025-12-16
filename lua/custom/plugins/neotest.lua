@@ -1,48 +1,55 @@
 return {
-  'nvim-neotest/neotest',
-  dependencies = {
-    'nvim-neotest/nvim-nio',
-    'nvim-lua/plenary.nvim',
-    'antoinemadec/FixCursorHold.nvim',
-    {
-      'nvim-treesitter/nvim-treesitter', -- Optional, but recommended
-      branch = 'main', -- NOTE; not the master branch!
-    },
-
-    -- adapters
-    {
-      'fredrikaverpil/neotest-golang',
-      version = '*', -- Optional, but recommended; track releases
-    },
-  },
-
-  config = function()
-    -- kemaps
-    -- https://www.lazyvim.org/extras/test/core
-    vim.keymap.set('n', '<leader>dnt', function()
-      require('neotest').run.run()
-    end, { desc = '[d]ebug [n]eotest nearest [t]est' })
-    vim.keymap.set('n', '<leader>dnf', function()
-      require('neotest').run.run(vim.fn.expand '%')
-    end, { desc = '[d]ebug [n]eotest current [f]ile' })
-    vim.keymap.set('n', '<leader>dnd', function()
-      require('neotest').run.run { strategy = 'dap' }
-    end, { desc = '[d]ebug [n]eotest nearest test [d]ap' })
-    vim.keymap.set('n', '<leader>dnl', function()
-      require('neotest').run.run_last { strategy = 'dap' }
-    end, { desc = '[d]ebug [n]eotest [l]ast test dap' })
-    vim.keymap.set('n', '<leader>dns', function()
-      require('neotest').summary.toggle()
-    end, { desc = '[d]ebug [n]eotest [s]ummary' })
-
-    local neotestGolangConfig = {
-      runner = 'gotestsum',
-    }
-
-    require('neotest').setup {
-      adapters = {
-        require 'neotest-golang' { neotestGolangConfig },
-      },
-    }
-  end,
+  -- 'nvim-neotest/neotest',
+  -- dependencies = {
+  --   'nvim-neotest/nvim-nio',
+  --   'nvim-lua/plenary.nvim',
+  --   'antoinemadec/FixCursorHold.nvim',
+  --   {
+  --     'nvim-treesitter/nvim-treesitter', -- Optional, but recommended
+  --     branch = 'main', -- NOTE; not the master branch!
+  --   },
+  --
+  --   -- adapters
+  --   {
+  --     'fredrikaverpil/neotest-golang',
+  --     version = '*', -- Optional, but recommended; track releases
+  --   },
+  -- },
+  --
+  -- config = function()
+  --   -- kemaps
+  --   -- https://www.lazyvim.org/extras/test/core
+  --   vim.keymap.set('n', '<leader>dnt', function()
+  --     require('neotest').run.run()
+  --   end, { desc = '[d]ebug [n]eotest nearest [t]est' })
+  --   vim.keymap.set('n', '<leader>dnf', function()
+  --     require('neotest').run.run(vim.fn.expand '%')
+  --   end, { desc = '[d]ebug [n]eotest current [f]ile' })
+  --   vim.keymap.set('n', '<leader>dnd', function()
+  --     require('neotest').run.run { strategy = 'dap' }
+  --   end, { desc = '[d]ebug [n]eotest nearest test [d]ap' })
+  --   vim.keymap.set('n', '<leader>dnl', function()
+  --     require('neotest').run.run_last { strategy = 'dap' }
+  --   end, { desc = '[d]ebug [n]eotest [l]ast test dap' })
+  --   vim.keymap.set('n', '<leader>dns', function()
+  --     require('neotest').summary.toggle()
+  --   end, { desc = '[d]ebug [n]eotest [s]ummary' })
+  --
+  --   local neotestGolangConfig = {
+  --     runner = 'gotestsum',
+  --     go_test_args = { '-count=1', '-tags=integration ' },
+  --     go_list_args = { '-tags=integration ' },
+  --     dap_go_opts = {
+  --       delve = {
+  --         build_flags = { '-tags=integraton' },
+  --       },
+  --     },
+  --   }
+  --
+  --   require('neotest').setup {
+  --     adapters = {
+  --       require 'neotest-golang' { neotestGolangConfig },
+  --     },
+  --   }
+  -- end,
 }

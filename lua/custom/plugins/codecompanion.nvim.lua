@@ -1,6 +1,6 @@
 return {
   'olimorris/codecompanion.nvim',
-  version = 'v18.1.1',
+  version = 'v19.2.0',
   -- lazy = false,
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -15,7 +15,7 @@ return {
     interactions = {
       chat = {
         adapter = 'gemini',
-        model = 'gemini-3-pro-preview',
+        model = 'gemini-3.1-pro-preview',
         slash_commands = {
           ['file'] = { opts = { provider = 'snacks' } },
         },
@@ -39,7 +39,7 @@ return {
       },
       inline = {
         adapter = 'gemini',
-        model = 'gemini-3-pro-preview',
+        model = 'gemini-3.1-pro-preview',
       },
     },
     display = {
@@ -63,7 +63,6 @@ return {
       },
       diff = {
         enabled = true,
-        provider = 'mini.diff',
       },
     },
     prompt_library = {
@@ -136,7 +135,7 @@ return {
     },
   },
   keys = {
-    { '<C-a>', '<cmd>CodeCompanionActions<CR>', mode = { 'n', 'v' }, desc = 'c[a]i action' },
+    { '<leader-ac>', '<cmd>CodeCompanionActions<CR>', mode = { 'n', 'v' }, desc = 'c[a]i action' },
     { '<leader>a\\', '<cmd>CodeCompanionChat toggle<CR>', desc = '[a]i toggle chat' },
     { '<leader>aa', '<cmd>CodeCompanionChat Add<CR>', desc = '[a]i [a]dd chat' },
     { '<leader>aP', '<cmd>CodeCompanionActions<CR>', desc = '[a]i [P]alette...' },

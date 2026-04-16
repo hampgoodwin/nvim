@@ -31,7 +31,7 @@ return {
     },
   },
   opts = {
-    notify_on_error = false,
+    notify_on_error = true,
     formatters_by_ft = {
       -- go = { "gofumpt" },
       javascript = { 'prettierd' },
@@ -41,9 +41,24 @@ return {
       typescriptreact = { 'prettierd' },
       nix = { 'nixfmt' },
       lua = { 'stylua' },
+      -- sql = { 'sql_formatter' },
+      sql = { 'sql_formatter' },
       terraform = { 'terraform_fmt' },
       tf = { 'terraform_fmt' },
       ['terraform-vars'] = { 'terraform_fmt' },
+    },
+    formatters = {
+      sqlfluff = {
+        command = 'sqlfluff',
+        args = { 'fix', '--dialect=postgres', '-' },
+        stdin = true,
+        require_cwd = false,
+      },
+      sql_formatter = {
+        -- Adds environment args to the yamlfix formatter
+        command = 'sql-formatter',
+        -- args = { '--fix', '-l', 'postgresql' },
+      },
     },
     format_on_save = function(bufnr)
       if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then

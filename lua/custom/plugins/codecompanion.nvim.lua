@@ -1,6 +1,6 @@
 return {
   'olimorris/codecompanion.nvim',
-  version = 'v19.2.0',
+  version = 'v19.11.0',
   -- lazy = false,
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -14,8 +14,7 @@ return {
 
     interactions = {
       chat = {
-        adapter = 'gemini',
-        model = 'gemini-3.1-pro-preview',
+        adapter = { name = 'gemini', model = 'gemini-3.1-pro-preview' },
         slash_commands = {
           ['file'] = { opts = { provider = 'snacks' } },
         },
@@ -38,8 +37,7 @@ return {
         },
       },
       inline = {
-        adapter = 'gemini',
-        model = 'gemini-3.1-pro-preview',
+        adapter = { name = 'gemini', model = 'gemini-3.1-pro-preview' },
       },
     },
     display = {

@@ -11,10 +11,21 @@ return {
       log_level = 'TRACE', -- TRACE|DEBUG|ERROR|INFO
       language = 'English',
     },
+    adapters = {
+      acp = {
+        gemini_cli = function()
+          return require('codecompanion.adapters').extend('gemini_cli', {
+            defaults = {
+              auth_method = 'gemini-api-key',
+            },
+          })
+        end,
+      },
+    },
 
     interactions = {
       chat = {
-        adapter = { name = 'gemini', model = 'gemini-3.1-pro-preview' },
+        adapter = { name = 'gemini_cli' },
         slash_commands = {
           ['file'] = { opts = { provider = 'snacks' } },
         },

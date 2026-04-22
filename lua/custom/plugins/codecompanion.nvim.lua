@@ -98,7 +98,7 @@ return {
             role = 'user',
             content = function(context)
               local visual = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
-              return '@{insert_edit_into_file} write documentation for the following code in the #{buffer} , do not include an example:\n\n```'
+              return 'write documentation for the following code in the #{buffer} , do not include an example:\n\n```'
                 .. context.filetype
                 .. '\n'
                 .. visual

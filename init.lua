@@ -129,6 +129,24 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Enable Native Treesitter features (Highlighting, Folds, Indent) for Neovim 0.12+
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Enable Treesitter highlighting, folding, and indentation',
+  group = vim.api.nvim_create_augroup('kickstart-treesitter', { clear = true }),
+  callback = function(args)
+    -- Enable treesitter highlighting natively (ignores errors if parser is missing)
+    pcall(vim.treesitter.start, args.buf)
+
+    -- Enable treesitter folds
+    vim.wo[0][0].foldmethod = 'expr'
+    vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.wo[0][0].foldlevel = 99
+
+    -- Enable experimental treesitter indentation
+    vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
+})
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.uv.fs_stat(lazypath) then

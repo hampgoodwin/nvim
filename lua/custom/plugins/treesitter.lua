@@ -3,16 +3,8 @@ return { -- Highlight, edit, and navigate code
   branch = 'main',
   lazy = false,
   build = ':TSUpdate',
-  -- main = 'nvim-treesitter.configs',
-  ---@type TSConfig
-  ---@diagnostic disable-next-line: missing-fields
-  opts = {
-    -- Autoinstall languages that are not installed
-    auto_install = true,
-    highlight = { enable = true },
-    indent = { enable = true },
-    fold = { enable = true },
-    ensure_installed = {
+  config = function()
+    require('nvim-treesitter').install {
       'go',
       'gotmpl',
       'gomod',
@@ -25,7 +17,6 @@ return { -- Highlight, edit, and navigate code
       'javascript',
       'jsdoc',
       'json',
-      'jsonc',
       'kdl',
       'lua',
       'luadoc',
@@ -46,6 +37,6 @@ return { -- Highlight, edit, and navigate code
       'vim',
       'vimdoc',
       'yaml',
-    },
-  },
+    }
+  end,
 }

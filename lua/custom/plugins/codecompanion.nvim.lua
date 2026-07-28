@@ -1,6 +1,6 @@
 return {
   'olimorris/codecompanion.nvim',
-  version = 'v19.11.0',
+  version = 'v19.18.0',
   -- lazy = false,
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -17,6 +17,13 @@ return {
           return require('codecompanion.adapters').extend('gemini_cli', {
             defaults = {
               auth_method = 'gemini-api-key',
+              session_config_options = {
+                ---@param self CodeCompanion.ACPAdapter
+                ---@return string
+                model = function(self)
+                  return 'auto'
+                end,
+              },
             },
           })
         end,
@@ -25,7 +32,7 @@ return {
 
     interactions = {
       chat = {
-        adapter = { name = 'gemini_cli' },
+        adapter = 'gemini_cli',
         slash_commands = {
           ['file'] = { opts = { provider = 'snacks' } },
         },
@@ -62,11 +69,11 @@ return {
           completion_provider = 'blink', -- blink|cmp|coc|default
         },
         auto_scroll = true,
-        show_header_separator = false,
+        show_header_separator = true,
         show_settings = false,
         start_in_insert_mode = false,
-        fold_reasoning = false,
-        show_reasoning = false,
+        fold_reasoning = true,
+        show_reasoning = true,
         show_tools_processing = true, -- Show the loading message when tools are being executed?
         show_token_count = true, -- Show the token count for each response?
       },
@@ -97,7 +104,7 @@ return {
           {
             role = 'user',
             content = function(context)
-              local visual = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
+              local visual = require('codecompanion.helpers.code').get_code(context.start_line, context.end_line)
               return 'write documentation for the following code in the #{buffer} , do not include an example:\n\n```'
                 .. context.filetype
                 .. '\n'
@@ -132,7 +139,7 @@ return {
           {
             role = 'user',
             content = function(context)
-              local visual = require('codecompanion.helpers.actions').get_code(context.start_line, context.end_line)
+              local visual = require('codecompanion.helpers.code').get_code(context.start_line, context.end_line)
               return 'I have the following code:\n\n```' .. context.filetype .. '\n' .. visual .. '\n```\n\n'
             end,
             opts = {

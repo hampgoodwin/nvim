@@ -1,6 +1,6 @@
 return {
   'olimorris/codecompanion.nvim',
-  version = 'v19.23.0',
+  version = 'v19.27.0',
   -- lazy = false,
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -13,26 +13,56 @@ return {
     },
     adapters = {
       acp = {
-        gemini_cli = function()
-          return require('codecompanion.adapters').extend('gemini_cli', {
-            defaults = {
-              auth_method = 'gemini-api-key',
-              session_config_options = {
-                ---@param self CodeCompanion.ACPAdapter
-                ---@return string
-                model = function(self)
-                  return 'auto'
-                end,
+        agy = function()
+          local helpers = require('codecompanion.adapters.acp.helpers')
+          return {
+            name = 'agy',
+            formatted_name = 'Antigravity',
+            type = 'acp',
+            roles = {
+              llm = 'assistant',
+              user = 'user',
+            },
+            opts = {
+              vision = true,
+            },
+            commands = {
+              default = {
+                'agy_acp_server', -- Or community wrapper binary/script, e.g. 'antigravity-acp'
               },
             },
-          })
+            defaults = {
+              auth_method = 'oauth-personal', -- 'oauth-personal' | 'gemini-api-key' | 'agent-platform'
+              mcpServers = {},
+              timeout = 30000,
+            },
+            parameters = {
+              protocolVersion = 1,
+              clientCapabilities = {
+                fs = { readTextFile = true, writeTextFile = true },
+              },
+              clientInfo = {
+                name = 'CodeCompanion.nvim',
+                version = '1.0.0',
+              },
+            },
+            handlers = {
+              setup = function(self)
+                return true
+              end,
+              form_messages = function(self, messages, capabilities)
+                return helpers.form_messages(self, messages, capabilities)
+              end,
+              on_exit = function(self, code) end,
+            },
+          }
         end,
       },
     },
 
     interactions = {
       chat = {
-        adapter = 'gemini_cli',
+        adapter = 'agy',
         slash_commands = {
           ['file'] = { opts = { provider = 'snacks' } },
         },

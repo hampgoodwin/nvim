@@ -1,6 +1,6 @@
 return {
   'olimorris/codecompanion.nvim',
-  version = 'v19.27.0',
+  version = 'v20.2.0',
   -- lazy = false,
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -28,13 +28,18 @@ return {
             },
             commands = {
               default = {
-                'agy_acp_server', -- Or community wrapper binary/script, e.g. 'antigravity-acp'
+                'agy',
+                'acp',
               },
             },
             defaults = {
-              auth_method = 'oauth-personal', -- 'oauth-personal' | 'gemini-api-key' | 'agent-platform'
+              auth_method = 'oauth-business', -- 'oauth-personal' | 'oauth-business' | 'gemini-api-key' | 'agent-platform'
               mcpServers = {},
               timeout = 30000,
+              session_config_options = {
+                model = 'gemini-4-hydrogen',
+                thought_level = 'medium',
+              },
             },
             parameters = {
               protocolVersion = 1,
@@ -47,13 +52,17 @@ return {
               },
             },
             handlers = {
-              setup = function(self)
-                return true
-              end,
-              form_messages = function(self, messages, capabilities)
-                return helpers.form_messages(self, messages, capabilities)
-              end,
-              on_exit = function(self, code) end,
+              lifecycle = {
+                setup = function(self)
+                  return true
+                end,
+                on_exit = function(self, data) end,
+              },
+              request = {
+                build_messages = function(self, args)
+                  return helpers.build_messages(self, args)
+                end,
+              },
             },
           }
         end,
@@ -67,10 +76,6 @@ return {
           ['file'] = { opts = { provider = 'snacks' } },
         },
         tools = {
-          opts = {
-            auto_submit_errors = true,
-            auto_submit_success = true,
-          },
           ['buffer'] = {
             opts = {
               default_params = 'diff',
@@ -85,7 +90,7 @@ return {
         },
       },
       inline = {
-        adapter = { name = 'gemini', model = 'gemini-3.8-flash' },
+        adapter = { name = 'gemini', model = 'gemini-4-hydrogen' },
       },
     },
     display = {

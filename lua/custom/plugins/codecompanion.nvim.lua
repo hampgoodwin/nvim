@@ -14,7 +14,7 @@ return {
     adapters = {
       acp = {
         agy = function()
-          local helpers = require('codecompanion.adapters.acp.helpers')
+          local helpers = require 'codecompanion.adapters.acp.helpers'
           return {
             name = 'agy',
             formatted_name = 'Antigravity',
@@ -85,7 +85,7 @@ return {
         },
       },
       inline = {
-        adapter = { name = 'gemini', model = 'gemini-3.1-pro-preview' },
+        adapter = { name = 'gemini', model = 'gemini-3.8-flash' },
       },
     },
     display = {
@@ -94,7 +94,7 @@ return {
         show_preset_prompts = false,
       },
       chat = {
-        intro_message = '✨CodeCompanion✨ ? for Opts',
+        intro_message = '✨ ? for Opts',
         opts = {
           completion_provider = 'blink', -- blink|cmp|coc|default
         },
